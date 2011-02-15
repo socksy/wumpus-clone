@@ -1,9 +1,6 @@
 package bgwumpus;
 
-/**
- * @author gic4
- *
- */
+
 public abstract class Tile {
 	TileType type;
 
@@ -19,10 +16,7 @@ public abstract class Tile {
 	 */
 	public void setType(TileType type) {
 		this.type = type;
-	}
-	
-	//Testing Source Code Control, ignore this Ben.
-	
+	}	
 	
 	
 }
