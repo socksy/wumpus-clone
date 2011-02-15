@@ -11,5 +11,6 @@ public enum TileType {
 	EXIT,
 	TREASURE,
 	PIT,
+	BAT,
 	STANDARD
 }

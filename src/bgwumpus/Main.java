@@ -4,7 +4,7 @@
 package bgwumpus;
 
 /**
- * @author bjl7
+ * note to self: lucidchart
  *
  */
 public class Main {
@@ -13,8 +13,17 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		//TODO initialise everything
+		
+		//Game loop
+		boolean running = true;
+		while (running) {
+			//TODO give feedback (where are we, what are we near?)
+			//TODO take input
+			//TODO act upon input
+		}
+		
 	}
 
 }
