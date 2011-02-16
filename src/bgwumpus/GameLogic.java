@@ -29,4 +29,35 @@ public class GameLogic {
 		}
 		return entity_map;
 	}
+
+	/**
+	 * @return the entity location
+	 */
+	public static int[] getEntityLocation(EntityType type) {
+		if (type == EntityType.PLAYER)
+			return PlayerLocation;
+		/*else if (type = EntityType.AI)
+			return AILocation;*/
+		else if (type == EntityType.WUMPUS)
+			return WumpusLocation;
+		else
+			return null;
+	}
+
+	/**
+	 * @param set entity location
+	 */
+	public static void setEntityLocation(int[] entity_location, EntityType type) {
+		if (type == EntityType.PLAYER)
+			PlayerLocation = entity_location;
+		else if (type == EntityType.WUMPUS)
+			WumpusLocation = entity_location;
+		/*else if (type == EntityType.AI)
+			AILocation = entity_location;*/
+
+	}
+
+	
+	
+	
 }
