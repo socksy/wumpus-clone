@@ -15,14 +15,16 @@ public class GameLogic {
 	{
 		Entity[][] entity_map = new Entity[Map.MAP_DIMENSIONS][Map.MAP_DIMENSIONS];
 		for (int i=0; i<Map.MAP_DIMENSIONS; i++) {
-			for (int j=0; i<Map.MAP_DIMENSIONS; j++) {
-				if (PlayerLocation[0]==j && PlayerLocation[1]==i)
+			for (int j=0; j<Map.MAP_DIMENSIONS; j++) {
+				if (PlayerLocation[0]==j && PlayerLocation[1]==i) {					
 					entity_map[i][j]=player1;
-				else if (WumpusLocation[0]==j && WumpusLocation[1]==i)
+				}
+				else if (WumpusLocation[0]==j && WumpusLocation[1]==i) {
 					entity_map[i][j]=wumpus1;
-				else
+				}
+				else {
 					entity_map[i][j]=null;
-					
+				}
 			}
 		}
 		return entity_map;
