@@ -1,12 +1,13 @@
 /**
- * 
+ * This is the namespace
  */
 package bgwumpus;
 
 /**
- * note to self: lucidchart
+ * Creates shit and then starts the game loop.
  *
  */
+//Note to self: lucid chart
 public class Main {
 
 	/**
