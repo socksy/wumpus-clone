@@ -15,8 +15,9 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		//TODO initialise everything
-		GameLogic.getEntityMap();
+		GUI Window = new GUI();
 		
+		Window.render();
 		//Game loop
 		boolean running = true;
 		while (running) {
