@@ -8,8 +8,10 @@ import java.util.*;
  */
 public class Map {
 	
-	Tile[][] map_array = new Tile[9][9]; //FOR NOW
+	final public int MAP_DIMENSIONS = 9; //FOR NOW
+	Tile[][] map_array = new Tile[MAP_DIMENSIONS][MAP_DIMENSIONS];
 	
+	//generateMap();
 	Map(){
 		
 		for(int i=0; i<9; i++){
@@ -21,6 +23,9 @@ public class Map {
 		
 	}
 	
+	/**
+	 * Generates a random map
+	 */
 	public void generateMap(){
 		
 		Random random = new Random();
@@ -60,6 +65,10 @@ public class Map {
 		
 	}
 	
+	/**
+	 * @deprecated
+	 * Prints map state
+	 */
 	public void printMapState(){
 		
 		
@@ -94,6 +103,14 @@ public class Map {
 		
 	}
 	
+	/**
+	 * Get Tile Type at set coordinates
+	 * 0,0 is top left
+	 * @param x integer
+	 * @param y integer
+	 * 
+	 * @return TileType enum (currently PIT, STANDARD, EXIT or BAT)
+	 */
 	public TileType getTypeAt(int x,int y){
 		
 		return map_array[y][x].getType();
@@ -101,6 +118,10 @@ public class Map {
 		
 	}
 	
+	/**
+	 * Get current map layout, as internally represented by this class.
+	 * @return 2D array of Tiles
+	 */
 	public Tile[][] getMap(){
 		
 		return map_array;

@@ -4,8 +4,8 @@
 package bgwumpus;
 
 /**
- * @author bjl7
- *
+ * Different types of tile
+ * Standard, Bat, Pit, Treasure, and Exit
  */
 public enum TileType {
 	EXIT,
