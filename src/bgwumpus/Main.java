@@ -14,8 +14,8 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
 		//TODO initialise everything
+		GameLogic.getEntityMap();
 		
 		//Game loop
 		boolean running = true;
