@@ -1,4 +1,5 @@
 package bgwumpus;
+import java.awt.Point;
 import java.util.*;
 
 
@@ -115,6 +116,18 @@ public class Map {
 		
 		return map_array[y][x].getType();
 		
+		
+	}
+	
+	/**
+	 * Get Tile Type at set coordinates from Point
+	 * 0,0 is top left
+	 * @param p Point object containing coordinates
+	 * @return TileType enum (currently PIT, STANDARD, EXIT or BAT)
+	 */
+	public static TileType getTypeAt(Point p){
+		
+		return map_array[(int)p.getY()][(int)p.getX()].getType();
 		
 	}
 	
