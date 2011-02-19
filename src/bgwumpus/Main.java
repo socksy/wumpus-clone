@@ -15,9 +15,11 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		//TODO initialise everything
-		GUI Window = new GUI();
-		
+		Map.init();
+		GameLogic.init();
+		GUI Window = new GUI();		
 		Window.render();
+		
 		//Game loop
 		boolean running = true;
 		while (running) {
