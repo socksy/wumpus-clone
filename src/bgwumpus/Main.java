@@ -17,8 +17,8 @@ public class Main {
 		//TODO initialise everything
 		Map.init();
 		GameLogic.init();
-		GUI Window = new GUI();		
-		Window.render();
+		GUI window = new GUI();	
+		window.render();
 		
 		//Game loop
 		boolean running = true;
