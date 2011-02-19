@@ -10,6 +10,8 @@ public class GameLogic {
 	static Player player1 = new Player();
 	static Wumpus wumpus1 = new Wumpus();
 	
+	
+	
 	/**
 	 * Gets a 2 dimensional array of Entities in order to render on top
 	 * Returns objects directly, gives flexibility to know which object is which - something not provided by just type information
@@ -75,9 +77,10 @@ public class GameLogic {
 	}
 
 	/**
-	 * Initialise starting locations
+	 * Initialise starting locations and create map
 	 */
 	public static void init() {
+		
 		Random rand = new Random();
 		//Initialise player starting position
 		player_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
@@ -147,7 +150,7 @@ public class GameLogic {
 		//less than 0? Loop over however many times needed.
 		while (coords.getX()<0) {
 			coords.setLocation(Map.MAP_DIMENSIONS - coords.getX(),coords.getY());
-		} //Same for y co-ordinate.
+		} //Same for y coordinate.
 		while (coords.getY()<0) {
 			coords.setLocation(coords.getX(),Map.MAP_DIMENSIONS - coords.getY());
 		}
@@ -160,5 +163,6 @@ public class GameLogic {
 			coords.setLocation(coords.getX(),coords.getY() - Map.MAP_DIMENSIONS);
 		}
 	}
+	
 	
 }

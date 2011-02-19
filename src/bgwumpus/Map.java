@@ -13,7 +13,7 @@ public class Map {
 	static Tile[][] map_array = new Tile[MAP_DIMENSIONS][MAP_DIMENSIONS];
 	
 	//generateMap();
-	Map(){
+	public static void init(){
 		
 		for(int i=0; i<9; i++){
 			for(int j=0; j<9; j++){
@@ -126,7 +126,6 @@ public class Map {
 	 * @return TileType enum (currently PIT, STANDARD, EXIT or BAT)
 	 */
 	public static TileType getTypeAt(Point p){
-		
 		return map_array[(int)p.getY()][(int)p.getX()].getType();
 		
 	}
