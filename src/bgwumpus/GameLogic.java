@@ -144,23 +144,23 @@ public class GameLogic {
 	
 	/**
 	 * Helper method to convert everything to torus coordinates (wrap-around)
-	 * @param coords Point array to convert to torus coordinates 
+	 * @param point Point array to convert to torus coordinates 
 	 */
-	private static void torusify(Point coords) {
+	public static void torusify(Point point) {
 		//less than 0? Loop over however many times needed.
-		while (coords.getX()<0) {
-			coords.setLocation(Map.MAP_DIMENSIONS - coords.getX(),coords.getY());
+		while (point.getX()<0) {
+			point.setLocation(Map.MAP_DIMENSIONS + point.getX(),point.getY());
 		} //Same for y coordinate.
-		while (coords.getY()<0) {
-			coords.setLocation(coords.getX(),Map.MAP_DIMENSIONS - coords.getY());
+		while (point.getY()<0) {
+			point.setLocation(point.getX(),Map.MAP_DIMENSIONS + point.getY());
 		}
 		//More than the map dimensions? Loop over!
-		while (coords.getX()>Map.MAP_DIMENSIONS) {
-			coords.setLocation(coords.getX() - Map.MAP_DIMENSIONS,coords.getY());
+		while (point.getX()>=Map.MAP_DIMENSIONS) {
+			point.setLocation(point.getX() - Map.MAP_DIMENSIONS,point.getY());
 		}
 		//And for y
-		while (coords.getY()>Map.MAP_DIMENSIONS) {
-			coords.setLocation(coords.getX(),coords.getY() - Map.MAP_DIMENSIONS);
+		while (point.getY()>=Map.MAP_DIMENSIONS) {
+			point.setLocation(point.getX(),point.getY() - Map.MAP_DIMENSIONS);
 		}
 	}
 	
