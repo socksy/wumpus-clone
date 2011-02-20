@@ -13,7 +13,7 @@ public class GameLogic {
 	static Wumpus wumpus = new Wumpus();
 	//static AI ai = new AI();
 	
-	static ArrayList<Point> history;
+	static ArrayList<Point> history = new ArrayList<Point>();
 	
 	
 	
@@ -87,8 +87,7 @@ public class GameLogic {
 			System.err.println("Couldn't set entity location.");
 			return;
 		}
-		Point temporary_point = new Point(x,y);
-		history.add(temporary_point);
+		history.add(new Point(x,y));
 
 	}
 
@@ -100,7 +99,7 @@ public class GameLogic {
 		Random rand = new Random();
 		//Initialise player starting position
 		player_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
-		history.add(player_location);
+		history.add(new Point(player_location));
 		//Initialise wumpus starting position, make sure it isn't the same as the player location
 		do {
 			wumpus_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
@@ -144,6 +143,7 @@ public class GameLogic {
 		
 		player_location.translate(dx,dy);
 		torusify(player_location);
+		history.add(new Point(player_location));
 		
 	}
 	
