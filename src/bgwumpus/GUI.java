@@ -34,14 +34,12 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 		setSize(32*Map.MAP_DIMENSIONS,32*Map.MAP_DIMENSIONS);
 		setResizable(false);
 		setVisible(true);
-
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
 
 	public void render(){
-
 		repaint();
-
 	}
 
 	public void paint(Graphics g){

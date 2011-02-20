@@ -13,6 +13,10 @@ public class Map {
 	static Tile[][] map_array = new Tile[MAP_DIMENSIONS][MAP_DIMENSIONS];
 	
 	//generateMap();
+	
+	/**
+	 * Initialises starting locations, creates map, etc.
+	 */
 	public static void init(){
 		
 		for(int i=0; i<MAP_DIMENSIONS; i++){
@@ -69,8 +73,8 @@ public class Map {
 	}
 	
 	/**
-	 * @deprecated
 	 * Prints map state
+	 * @deprecated
 	 */
 	public static void printMapState(){
 		
