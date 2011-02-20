@@ -46,10 +46,10 @@ public class UserInputHandler implements KeyListener {
 		
 		switch(key_code){
 		
-		case KeyEvent.VK_RIGHT: System.out.println("RIGHT"); break;
-		case KeyEvent.VK_LEFT: System.out.println("LEFT"); break;
-		case KeyEvent.VK_UP: System.out.println("UP"); break;
-		case KeyEvent.VK_DOWN: System.out.println("DOWN"); break;
+		case KeyEvent.VK_RIGHT:  break;
+		case KeyEvent.VK_LEFT:  break;
+		case KeyEvent.VK_UP:  break;
+		case KeyEvent.VK_DOWN:  break;
 		}
 		
 	}
@@ -60,10 +60,10 @@ public class UserInputHandler implements KeyListener {
 		
 		switch(key_code){
 		
-		case KeyEvent.VK_RIGHT: System.out.println("RIGHT RELEASED"); break;
-		case KeyEvent.VK_LEFT: System.out.println("LEFT RELEASED"); break;
-		case KeyEvent.VK_UP: System.out.println("UP RELEASED"); break;
-		case KeyEvent.VK_DOWN: System.out.println("DOWN RELEASED"); break;
+		case KeyEvent.VK_RIGHT:  break;
+		case KeyEvent.VK_LEFT:  break;
+		case KeyEvent.VK_UP:  break;
+		case KeyEvent.VK_DOWN:  break;
 		}
 		
 		

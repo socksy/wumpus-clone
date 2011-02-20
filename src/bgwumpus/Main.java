@@ -18,11 +18,12 @@ public class Main {
 		Map.init();
 		GameLogic.init();
 		GUI window = new GUI();	
-		window.render();
 		
 		//Game loop
 		boolean running = true;
 		while (running) {
+			window.render();
+
 			//TODO give feedback (where are we, what are we near?)
 			//TODO take input
 			//TODO act upon input

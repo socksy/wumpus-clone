@@ -7,8 +7,8 @@ public class GameLogic {
 	static Point wumpus_location = new Point(0,1);
 	static Point[] nearby_locations ={new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)}; //north south east west from (0,0)
 	//static Point AILocation = new Point(0,0);
-	static Player player1 = new Player();
-	static Wumpus wumpus1 = new Wumpus();
+	static Player player = new Player();
+	static Wumpus wumpus = new Wumpus();
 	
 	
 	
@@ -23,10 +23,10 @@ public class GameLogic {
 		for (int i=0; i<Map.MAP_DIMENSIONS; i++) {
 			for (int j=0; j<Map.MAP_DIMENSIONS; j++) {
 				if (player_location.getX() == j && player_location.getY() == i) {					
-					entity_map[i][j]=player1;
+					entity_map[i][j]=player;
 				}
 				else if (wumpus_location.getX() ==j && wumpus_location.getY() == i) {
-					entity_map[i][j]=wumpus1;
+					entity_map[i][j]=wumpus;
 				}
 				else {
 					entity_map[i][j]=null;
