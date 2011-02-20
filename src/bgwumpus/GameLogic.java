@@ -7,8 +7,13 @@ public class GameLogic {
 	static Point wumpus_location = new Point(0,1);
 	static Point[] nearby_locations ={new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)}; //north south east west from (0,0)
 	//static Point AILocation = new Point(0,0);
-	static Player player1 = new Player();
-	static Wumpus wumpus1 = new Wumpus();
+	
+	//Create instances
+	static Player player = new Player();
+	static Wumpus wumpus = new Wumpus();
+	//static AI ai = new AI();
+	
+	static ArrayList<Point> history;
 	
 	
 	
@@ -23,10 +28,10 @@ public class GameLogic {
 		for (int i=0; i<Map.MAP_DIMENSIONS; i++) {
 			for (int j=0; j<Map.MAP_DIMENSIONS; j++) {
 				if (player_location.getX() == j && player_location.getY() == i) {					
-					entity_map[i][j]=player1;
+					entity_map[i][j]=player;
 				}
 				else if (wumpus_location.getX() ==j && wumpus_location.getY() == i) {
-					entity_map[i][j]=wumpus1;
+					entity_map[i][j]=wumpus;
 				}
 				else {
 					entity_map[i][j]=null;
@@ -54,25 +59,36 @@ public class GameLogic {
 	 * @param the location expressed as a Point object and the type of entity as EntityType
 	 */
 	public static void setEntityLocation(Point entity_location, EntityType type) {
-		if (type == EntityType.PLAYER)
+		if (type == EntityType.PLAYER) {
 			player_location = entity_location;
-		else if (type == EntityType.WUMPUS)
+		} else if (type == EntityType.WUMPUS) {
 			wumpus_location = entity_location;
-		/*else if (type == EntityType.AI)
-			AILocation = entity_location;*/
-
+		} /*else if (type == EntityType.AI) {
+			AILocation = entity_location;
+		}*/ else {
+			System.err.println("Couldn't set entity location.");
+			return;
+		}
+		history.add(entity_location);
+		
 	}
 
 	/** set entity location
 	 * @param the location expressed as integers x and y and then the type of entity as EntityType
 	 */
 	public static void setEntityLocation(int x, int y, EntityType type) {
-		if (type == EntityType.PLAYER)
+		if (type == EntityType.PLAYER) {
 			player_location.setLocation(x,y);
-		else if (type == EntityType.WUMPUS)
+		} else if (type == EntityType.WUMPUS)
 			wumpus_location.setLocation(x,y);
-		/*else if (type == EntityType.AI)
-			AILocation.setLocation(x,y)*/
+		/*else if (type == EntityType.AI) {
+			AILocation.setLocation(x,y)
+		}*/ else {
+			System.err.println("Couldn't set entity location.");
+			return;
+		}
+		Point temporary_point = new Point(x,y);
+		history.add(temporary_point);
 
 	}
 
@@ -84,6 +100,7 @@ public class GameLogic {
 		Random rand = new Random();
 		//Initialise player starting position
 		player_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
+		history.add(player_location);
 		//Initialise wumpus starting position, make sure it isn't the same as the player location
 		do {
 			wumpus_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
