@@ -13,7 +13,7 @@ public class GameLogic {
 	static Wumpus wumpus = new Wumpus();
 	//static AI ai = new AI();
 	
-	static ArrayList<Point> history;
+	static ArrayList<Point> history = new ArrayList<Point>();
 	
 	
 	

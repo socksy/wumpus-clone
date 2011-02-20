@@ -1,7 +1,7 @@
 package bgwumpus;
 
 /**
- * 
+ * Class from which to 
  *
  */
 public abstract class Entity {
