@@ -53,13 +53,14 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 				
 				//draw tiles
 				if(Map.getTypeAt(j,i) == TileType.PIT){
-				g.drawImage(img.get(1), j*32, i*32, 32, 32, null);
+					g.drawImage(img.get(1), j*32, i*32, 32, 32, null);
 				}
 				else if(Map.getTypeAt(j,i) == TileType.TREASURE){
-				g.drawImage(img.get(2), j*32, i*32, 32, 32, null);
+					g.drawImage(img.get(0), j*32, i*32, 32, 32, null);
+					g.drawImage(img.get(2), j*32, i*32, 32, 32, null);
 				}
 				else {
-				g.drawImage(img.get(0),j*32,i*32,32,32,null);	
+					g.drawImage(img.get(0),j*32,i*32,32,32,null);	
 				}
 				
 				//draw entities on top
