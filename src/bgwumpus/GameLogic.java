@@ -104,6 +104,8 @@ public class GameLogic {
 		do {
 			wumpus_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
 		} while (wumpus_location.equals(player_location));
+		
+		
 	}
 	
 	//TODO: use this when an arrow is badly shot
@@ -131,6 +133,103 @@ public class GameLogic {
 		//set the location, randomly picked from the list of possible options
 		wumpus_location.setLocation(moveable_locations.get(rand.nextInt(moveable_locations.size())));
 
+	}
+	
+	/** Checks if the contents of the tile is visible to the player or if it's too far away
+	 * @param x the x position of the tile 
+	 * @param y the y position of the tile
+	 * @param the entity type, normally the player
+	 * @return true if visible, false if not
+	 */
+	public static boolean checkVisibility(int x,int y,EntityType type){
+		
+		int xp = 0;
+		int yp = 0;
+		
+		switch(type){
+		case PLAYER: 
+			xp = player_location.x;
+			yp = player_location.y;
+			break;
+		//TODO add in for other entity types if we decide it is necessary, if not then possibly just hardcode for the player
+		}
+		
+		if( Math.abs(xp-x) > 1 || Math.abs(yp-y) > 1 ){
+			
+			//the tile is not visible
+			return false;
+			
+		}
+		else {
+			//the tile is visible
+			return true;
+		
+		}
+	}
+	
+	
+	/**
+	 * @param type the type of the entity you want to check the surroundings of, normally player or AI
+	 */
+	public static void checkPercepts(EntityType type){
+		
+		Point pos = new Point(0,0);
+		
+		
+		//TODO Condense into 1, these blocks are mostly the same
+		if(type == EntityType.PLAYER){
+			
+			//loop through nearby locations e.g 1 tile North, South, East and West
+			for(Point i : nearby_locations) {
+				
+				Point current_iter =  new Point();
+				current_iter.setLocation(pos.getX()+i.getX(),pos.getY()+i.getY());
+				torusify(current_iter);
+				
+				switch(Map.getTypeAt(current_iter)){
+				
+					case PIT: player.setPercept("pit"); break;
+					case BAT: player.setPercept("bat"); break;
+					case TREASURE: player.setPercept("treasure"); break;
+					default: break;
+					
+				}
+				
+				
+				
+			}
+			
+		}
+		else if(type == EntityType.AI){
+			
+			//loop through nearby locations e.g 1 tile North, South, East and West
+			for(Point i : nearby_locations) {
+				
+				Point current_iter =  new Point();
+				current_iter.setLocation(pos.getX()+i.getX(),pos.getY()+i.getY());
+				torusify(current_iter);
+				
+				switch(Map.getTypeAt(current_iter)){
+				
+					case PIT: player.setPercept("pit"); break;
+					case BAT: player.setPercept("bat"); break;
+					case TREASURE: player.setPercept("treasure"); break;
+					default: break;
+					
+				}
+				
+				
+				
+			}
+			
+			
+		}
+		
+		
+		
+		
+		
+		
 	}
 	
 	/**
