@@ -60,10 +60,10 @@ public class UserInputHandler implements KeyListener {
 		
 		switch(key_code){
 		
-		case KeyEvent.VK_RIGHT:  break;
-		case KeyEvent.VK_LEFT:  break;
-		case KeyEvent.VK_UP:  break;
-		case KeyEvent.VK_DOWN:  break;
+		case KeyEvent.VK_RIGHT: GameLogic.movePlayer(1, 0);  break;
+		case KeyEvent.VK_LEFT: GameLogic.movePlayer(-1, 0); break;
+		case KeyEvent.VK_UP:  GameLogic.movePlayer(0, -1); break;
+		case KeyEvent.VK_DOWN:  GameLogic.movePlayer(0, 1); break;
 		}
 		
 		

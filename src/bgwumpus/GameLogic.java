@@ -117,6 +117,14 @@ public class GameLogic {
 
 	}
 	
+	public static void movePlayer(int dx,int dy){
+		
+		
+		player_location.translate(dx,dy);
+		torusify(player_location);
+		
+	}
+	
 	/**
 	 * Helper method to convert everything to torus coordinates (wrap-around)
 	 * @param coords int array to convert to torus coordinates 
