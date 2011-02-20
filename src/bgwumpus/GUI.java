@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Toolkit;
-import java.util.ArrayList;
+import java.util.*;
 
 public class GUI extends javax.swing.JFrame implements UserInterface {
 
@@ -17,7 +17,7 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	 * TODO work out what this is, eclipse complains with a warning if I do not have it
 	 */
 	private static final long serialVersionUID = 5111988071128070407L;
-	private ArrayList<Image> img = new ArrayList<Image>();
+	private HashMap<String, Image> images = new HashMap<String, Image>();
 
 	GUI(){
 
@@ -26,10 +26,11 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 
 		//load images
 		Toolkit t = Toolkit.getDefaultToolkit();
-		img.add(t.getImage("dirt.gif"));
-		img.add(t.getImage("pit.gif"));
-		img.add(t.getImage("treasure.png"));
-		img.add(t.getImage("player.gif"));
+		images.put("dirt", t.getImage("dirt.png"));
+		images.put("pit", t.getImage("pit.png"));
+		images.put("treasure", t.getImage("treasure.png"));
+		images.put("player", t.getImage("player.png"));
+
 
 		setSize(32*Map.MAP_DIMENSIONS,32*Map.MAP_DIMENSIONS);
 		setResizable(false);
@@ -62,11 +63,13 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 				if(tileIsVisible){
 					//draw tiles
 					if(Map.getTypeAt(j,i) == TileType.PIT){
-						g.drawImage(img.get(1), j*32, i*32, 32, 32, null);
+						g.drawImage(images.get("dirt"),j*32,i*32,32,32,null);	
+						g.drawImage(images.get("pit"), j*32, i*32, 32, 32, null);
 					} else if(Map.getTypeAt(j,i) == TileType.TREASURE){
-						g.drawImage(img.get(2), j*32, i*32, 32, 32, null);
+						g.drawImage(images.get("dirt"),j*32,i*32,32,32,null);	
+						g.drawImage(images.get("treasure"), j*32, i*32, 32, 32, null);				
 					} else {
-						g.drawImage(img.get(0),j*32,i*32,32,32,null);	
+						g.drawImage(images.get("dirt"),j*32,i*32,32,32,null);	
 					}
 
 				}
@@ -77,7 +80,7 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 
 				//draw entities on top
 				if(GameLogic.player_location.equals(new Point(j,i))){
-					g.drawImage(img.get(3), j*32, i*32, 32, 32, null); 
+					g.drawImage(images.get("player"), j*32, i*32, 32, 32, null); 
 				}
 
 			}
