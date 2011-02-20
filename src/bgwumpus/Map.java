@@ -15,11 +15,13 @@ public class Map {
 	//generateMap();
 	public static void init(){
 		
-		for(int i=0; i<9; i++){
-			for(int j=0; j<9; j++){
+		for(int i=0; i<MAP_DIMENSIONS; i++){
+			for(int j=0; j<MAP_DIMENSIONS; j++){
 				map_array[i][j] = new StandardTile();
 			}
 		}
+		
+		generateMap();
 		
 		
 	}
@@ -33,10 +35,10 @@ public class Map {
 		boolean treasureSet = false;
 		boolean exitSet = false;
 		
-		for(int i=0; i<9; i++){
-			for(int j=0; j<9; j++){
+		for(int i=0; i<MAP_DIMENSIONS; i++){
+			for(int j=0; j<MAP_DIMENSIONS; j++){
 				
-				int random_number = Math.abs(random.nextInt() % 7)+1;
+				int random_number = Math.abs(random.nextInt() % 20)+1;
 				
 				switch(random_number){
 				
