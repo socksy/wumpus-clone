@@ -5,6 +5,7 @@ package bgwumpus;
 
 /**
  * Creates shit and then starts the game loop.
+ *TODO Make design good object oriented, do proper encapsulation
  *
  */
 //Note to self: lucid chart
@@ -22,6 +23,7 @@ public class Main {
 		//Game loop
 		boolean running = true;
 		while (running) {
+			
 			window.render();
 
 			//TODO give feedback (where are we, what are we near?)
