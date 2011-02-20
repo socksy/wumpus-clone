@@ -140,11 +140,9 @@ public class GameLogic {
 	 * @param dy integer amount to translate in y axis
 	 */
 	public static void movePlayer(int dx,int dy){
-		
-		
 		player_location.translate(dx,dy);
 		torusify(player_location);
-		
+		history.add(player_location);
 	}
 	
 	/**
