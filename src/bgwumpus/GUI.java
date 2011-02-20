@@ -51,6 +51,9 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 		for(int i=0; i<Map.MAP_DIMENSIONS; i++){
 			for(int j=0; j<Map.MAP_DIMENSIONS; j++){
 				
+				//draw tiles
+				if(Map.getTypeAt(j,i) == TileType.PIT){
+					g.drawImage(img.get(1), j*32, i*32, 32, 32, null);
 				//assume the tile has not been discovered
 				boolean tileIsVisible = false;
 				
@@ -59,20 +62,15 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 					if(GameLogic.history.get(k).x == j && GameLogic.history.get(k).y == i){
 						tileIsVisible = true;
 					}
-
 				}
-					
-				
 				//if tile is discovered by the player
 				if(tileIsVisible){
 					//draw tiles
 					if(Map.getTypeAt(j,i) == TileType.PIT){
 					g.drawImage(img.get(1), j*32, i*32, 32, 32, null);
-					}
-					else if(Map.getTypeAt(j,i) == TileType.TREASURE){
+					} else if(Map.getTypeAt(j,i) == TileType.TREASURE){
 					g.drawImage(img.get(2), j*32, i*32, 32, 32, null);
-					}
-					else {
+					} else {
 					g.drawImage(img.get(0),j*32,i*32,32,32,null);	
 					}
 					
