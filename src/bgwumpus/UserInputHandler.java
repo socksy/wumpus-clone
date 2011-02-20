@@ -50,6 +50,7 @@ public class UserInputHandler implements KeyListener {
 		case KeyEvent.VK_LEFT:  break;
 		case KeyEvent.VK_UP:  break;
 		case KeyEvent.VK_DOWN:  break;
+		case KeyEvent.VK_ESCAPE: System.exit(0); break; //quit upon hitting escape
 		}
 		
 	}
@@ -60,6 +61,7 @@ public class UserInputHandler implements KeyListener {
 		
 		switch(key_code){
 		
+		//move up,down,left,or right when corresponding arrow key is released
 		case KeyEvent.VK_RIGHT: GameLogic.movePlayer(1, 0);  break;
 		case KeyEvent.VK_LEFT: GameLogic.movePlayer(-1, 0); break;
 		case KeyEvent.VK_UP:  GameLogic.movePlayer(0, -1); break;
