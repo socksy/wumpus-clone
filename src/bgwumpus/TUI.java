@@ -1,7 +1,7 @@
 package bgwumpus;
 
 /**
- * The text interface
+ * The text user interface
  *
  */
 public class TUI implements UserInterface {
