@@ -30,7 +30,6 @@ public class Main {
 			GameLogic.checkPercepts(player1);
 			window.outputPerceptionMessages(player1);
 			
-			if(player1.isAlive() == false) System.out.println("DEATH!!!!!");
 			window.render();
 
 			//TODO give feedback (where are we, what are we near?)
