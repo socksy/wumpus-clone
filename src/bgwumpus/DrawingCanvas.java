@@ -24,6 +24,7 @@ public class DrawingCanvas extends JComponent {
 		images.put("treasure", t.getImage("treasure.png"));
 		images.put("exit", t.getImage("exit.png"));
 		images.put("player", t.getImage("player.png"));
+		images.put("bat", t.getImage("bat.png"));
 		images.put("wumpus", t.getImage("wumpus.png"));
 		images.put("dirt_fog",t.getImage("dirt_fog.png"));
 		images.put("pit_fog",t.getImage("dirt_fog.png"));

@@ -16,6 +16,8 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	 */
 	private static final long serialVersionUID = 5111988071128070407L;
 	private DrawingCanvas canvas = new DrawingCanvas();
+	private boolean messagesUpdated = false;
+	int messageListSize = 0;
 
 	GUI(){
 
@@ -41,14 +43,17 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	
 	public void outputPerceptionMessages(Player player){
 		
+		
 		ArrayList<String> messages = GameLogic.getPerceptionMessages(player);
 
-		if(messages != null){
+		if(messages != null && messages.size() != messageListSize){
 			for(int i=0; i<messages.size(); i++){
 				
 				System.out.println(messages.get(i));
 			}
 		}
+		
+		messageListSize = messages.size();
 
 
 		
