@@ -16,6 +16,7 @@ public class GameLogic {
 	
 	static ArrayList<Point> history = new ArrayList<Point>();
 	
+	static int player_steps = 0;
 	
 	
 	/** 
@@ -315,8 +316,25 @@ public class GameLogic {
 		
 		switch(Map.getTypeAt(pos)){
 		case PIT: player.die(); break;
+		case BAT: movedBySuperbat(EntityType.PLAYER);
 		}
 		
+		
+	}
+	
+	public static void movedBySuperbat(EntityType entity){
+		
+		Point location = getEntityLocation(entity);
+		Random random_generator = new Random();
+		//randomly move
+		do { //do while it has not generated a sensible location e.g on a pit, the same location or on the wumpus
+			
+			//set to a random x and y location
+			location.setLocation(random_generator.nextInt(Map.MAP_DIMENSIONS),random_generator.nextInt(Map.MAP_DIMENSIONS));
+			
+		} while(Map.getTypeAt(location) != TileType.PIT && location != wumpus_location && location != getEntityLocation(entity)); 
+		
+		setEntityLocation(location,entity);
 		
 	}
 	
@@ -329,6 +347,7 @@ public class GameLogic {
 		player_location.translate(dx,dy);
 		torusify(player_location);
 		history.add(new Point(player_location));
+		player_steps++;
 	}
 	
 	/**

@@ -21,9 +21,14 @@ public class Main {
 		GUI window = new GUI();	
 		Player player1 = new Player();
 		
-		//Game loop
 		boolean running = true;
+		boolean in_game = true;
+		
+		//Program loop
 		while (running) {
+			
+			//Game loop
+			while(in_game){
 			
 			window.render();
 			GameLogic.doTile(player1);
@@ -32,12 +37,13 @@ public class Main {
 			
 			window.render();
 
+			if(!player1.isAlive()) running = false;
 			//TODO give feedback (where are we, what are we near?)
 			//TODO take input
 			//TODO act upon input
+			}
 		}
 	
-		System.exit(0);
 	}
 	
 

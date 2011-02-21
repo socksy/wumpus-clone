@@ -65,6 +65,8 @@ public class DrawingCanvas extends JComponent {
 					
 					} else if(Map.getTypeAt(j,i) == TileType.EXIT){ //if an exit, draw the exit tile
 						g.drawImage(images.get("exit"),j*32,i*32,32,32,null);
+					} else if(Map.getTypeAt(j,i) == TileType.BAT){
+						g.drawImage(images.get("bat"),j*32,i*32,32,32,null);
 					}
 					else { //if not a special tile
 						g.drawImage(images.get("dirt"),j*32,i*32,32,32,null); //draw the dirt standard tile

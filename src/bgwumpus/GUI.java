@@ -55,7 +55,6 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 		
 		messageListSize = messages.size();
 		
-		System.out.print("\n");
 
 
 		
