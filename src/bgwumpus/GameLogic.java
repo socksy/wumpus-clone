@@ -232,7 +232,8 @@ public class GameLogic {
 		
 	}
 	
-	/** Sets the perception variables if appropriate
+	/** 
+	 * Sets the perception variables if appropriate
 	 * @param player the player object
 	 */
 	public static void checkPercepts(Player player){
@@ -271,7 +272,8 @@ public class GameLogic {
 		
 	}
 	
-	/** Sets the perception variables if appropriate
+	/**
+	 * Sets the perception variables if appropriate
 	 * @param ai the ai object
 	 */
 	public static void checkPercepts(AI ai){
@@ -308,6 +310,10 @@ public class GameLogic {
 	
 	}
 	
+	/**
+	 * Do action based on tile
+	 * @param player to do action to
+	 */
 	public static void doTile(Player player){
 		
 		Point pos = player_location;
