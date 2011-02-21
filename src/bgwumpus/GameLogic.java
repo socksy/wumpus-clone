@@ -49,7 +49,7 @@ public class GameLogic {
 		if (type == EntityType.PLAYER)
 			return player_location;
 		/*else if (type = EntityType.AI)
-			return AILocation;*/
+			return AI_location;*/
 		else if (type == EntityType.WUMPUS)
 			return wumpus_location;
 		else
@@ -65,7 +65,7 @@ public class GameLogic {
 		} else if (type == EntityType.WUMPUS) {
 			wumpus_location = entity_location;
 		} /*else if (type == EntityType.AI) {
-			AILocation = entity_location;
+			AI_location = entity_location;
 		}*/ else {
 			System.err.println("Couldn't set entity location.");
 			return;
@@ -83,7 +83,7 @@ public class GameLogic {
 		} else if (type == EntityType.WUMPUS)
 			wumpus_location.setLocation(x,y);
 		/*else if (type == EntityType.AI) {
-			AILocation.setLocation(x,y)
+			AI_location.setLocation(x,y)
 		}*/ else {
 			System.err.println("Couldn't set entity location.");
 			return;
@@ -119,14 +119,16 @@ public class GameLogic {
 			Point current_iter =  new Point();
 			current_iter.setLocation(wumpus_location.getX()+i.getX(),wumpus_location.getY()+i.getY());
 			torusify(current_iter);
+			
 			//If nothing dangerous, add to possible moveable locations
 			switch(Map.getTypeAt(current_iter)){
-			case BAT: 
-			case EXIT: 
-			case PIT: break;
-			default: 
-				moveable_locations.add(current_iter);
-				break;
+				case BAT: 
+				case EXIT: 
+				case PIT: 
+					break;
+				default: 
+					moveable_locations.add(current_iter);
+					break;
 			}
 			
 		}
@@ -136,51 +138,55 @@ public class GameLogic {
 
 	}
 	
-	/** Checks if the contents of the tile is visible to the player or if it's too far away
+	/** Checks if the contents of the tile is visible to an entity or if it's too far away
 	 * @param x the x position of the tile 
 	 * @param y the y position of the tile
-	 * @param the entity type, normally the player
-	 * @return true if visible, false if not
+	 * @param type the entity type, normally the player
+	 * @return true if visible for the entity, false if not.
 	 */
 	public static boolean checkVisibility(int x,int y,EntityType type){
-		
-		int xp = 0;
-		int yp = 0;
+		int xpos = 0;
+		int ypos = 0;
 		
 		switch(type){
-		case PLAYER: 
-			xp = player_location.x;
-			yp = player_location.y;
-			break;
-		//TODO add in for other entity types if we decide it is necessary, if not then possibly just hardcode for the player
+			case PLAYER: 
+				xpos = player_location.x;
+				ypos = player_location.y;
+				break;
+			/*case AI:
+				xpos = AI_location.x;
+				ypos = AI_location.y*/
+			//TODO add in for other entity types if we decide it is necessary, if not then possibly just hardcode for the player
 		}
 		
-		if( Math.abs(xp-x) > 1 || Math.abs(yp-y) > 1 ){
-			
-			//the tile is not visible
-			return false;
-			
+		if( Math.abs(xpos-x) > 1 || Math.abs(ypos-y) > 1 ){
+			return false; //the tile is not visible
 		}
 		else {
-			//the tile is visible
-			return true;
-		
+			return true; //the tile is visible
 		}
-		
+	}
+	
+	/**
+	 * Checks if the contents of the tile is visible to the player or if it's too far away
+	 * @param x the x position of the tile 
+	 * @param y the y position of the tile
+	 * @return true if visible for the player, false if not.
+	 */
+	public static boolean checkVisibility(int x, int y) {
+		return checkVisibility(x, y, EntityType.PLAYER);
 	}
 	
 	/** Gets the list of relevant perception messages
-	 * @param the player object
-	 * @return an array list of messages based on the perception of the surrounding tiles
-	 */
+     * @param the player object
+     * @return an array list of messages based on the perception of the surrounding tiles
+     */
 	public static ArrayList<String> getPerceptionMessages(Player player){
-		
 		ArrayList<String> perception_messages = new ArrayList<String>();
 				
 			if(player.getPercept("pits")){
 				perception_messages.add("You feel a breeze");
 			}
-		
 			if(player.getPercept("bats")){
 				perception_messages.add("You hear a flapping noise");				
 			}
@@ -195,16 +201,13 @@ public class GameLogic {
 	
 		
 	}
-	
+
 	public static ArrayList<String> getPerceptionMessages(AI ai){
-		
 		ArrayList<String> perception_messages = new ArrayList<String>();
 
-		
 		if(ai.getPercept("pits")){
 			perception_messages.add("You feel a breeze");
 		}
-		
 		if(ai.getPercept("bats")){
 			perception_messages.add("You hear a flapping noise");				
 		}
@@ -214,7 +217,7 @@ public class GameLogic {
 		if(ai.getPercept("wumpus")){
 			perception_messages.add("Eurgh, what is that smell");		
 		}
-		
+
 		return perception_messages;
 		
 		
@@ -236,10 +239,17 @@ public class GameLogic {
 				
 				switch(Map.getTypeAt(current_iter)){
 				
-					case PIT: player.setPercept("pits"); break;
-					case BAT: player.setPercept("bats"); break;
-					case TREASURE: player.setPercept("treasure"); break;
-					default: break;
+					case PIT: 
+						player.setPercept("pits"); 
+						break;
+					case BAT: 
+						player.setPercept("bats"); 
+						break;
+					case TREASURE: 
+						player.setPercept("treasure"); 
+						break;
+					default: 
+						break;
 					
 				}
 			
@@ -263,12 +273,17 @@ public class GameLogic {
 			torusify(current_iter);
 
 			switch(Map.getTypeAt(current_iter)){
-
-			case PIT: ai.setPercept("pits"); break;
-			case BAT: ai.setPercept("bats"); break;
-			case TREASURE: ai.setPercept("treasure"); break;
-			default: break;
-
+				case PIT: 
+					ai.setPercept("pits"); 
+					break;
+				case BAT: 
+					ai.setPercept("bats"); 
+					break;
+				case TREASURE: 
+					ai.setPercept("treasure");
+					break;
+				default: 
+					break;
 			}
 		}
 	
