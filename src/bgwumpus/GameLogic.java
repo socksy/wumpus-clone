@@ -351,6 +351,20 @@ public class GameLogic {
 	}
 	
 	/**
+	 * Translates entity  by amount specified
+	 * @param dx integer amount to translate in x axis
+	 * @param dy integer amount to translate in y axis
+	 */
+	public static void moveEntity(int dx,int dy,EntityType entity){	
+		
+		Point position = getEntityLocation(entity);
+		torusify(position);
+		history.add(new Point(position));
+		setEntityLocation(position,entity);
+		player_steps++;
+	}
+	
+	/**
 	 * Helper method to convert everything to torus coordinates (wrap-around)
 	 * @param coords int array to convert to torus coordinates 
 	 * NB: Requires array of exactly two integers.
