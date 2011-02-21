@@ -223,7 +223,7 @@ public class GameLogic {
 		
 	}
 	
-	/**
+	/** Sets the perception variables if appropriate
 	 * @param player the player object
 	 */
 	public static void checkPercepts(Player player){
@@ -252,12 +252,17 @@ public class GameLogic {
 						break;
 					
 				}
+				
+				//check for wumpus perception
+				if(getTypeAt(current_iter) == EntityType.WUMPUS){
+					player.setPercept("wumpus"); 
+				}
 			
 			}	
 		
 	}
 	
-	/**
+	/** Sets the perception variables if appropriate
 	 * @param ai the ai object
 	 */
 	public static void checkPercepts(AI ai){
@@ -285,8 +290,23 @@ public class GameLogic {
 				default: 
 					break;
 			}
+			
+			//check for wumpus perception
+			if(getTypeAt(current_iter) == EntityType.WUMPUS){
+				ai.setPercept("wumpus"); 
+			}
 		}
 	
+	}
+	
+	public static void doTile(Player player){
+		
+
+		switch(Map.getTypeAt((int)player_location.getX(),(int)player_location.getY())){
+		case PIT: player.die(); break;
+		}
+		
+		
 	}
 	
 	/**
@@ -347,6 +367,35 @@ public class GameLogic {
 		}
 	}
 	
+	/**
+	 * 
+	 */
+	public static EntityType getTypeAt(int x,int y){
+		
+		if(player_location.getX() == x && player_location.getY() == y){
+			return EntityType.PLAYER;
+		}
+		else if(wumpus_location.getX() == x && wumpus_location.getY() == y){
+			return EntityType.WUMPUS;
+		}
+		/*else if(ai_location.getX() == x && ai_location.getY() == y){
+			return EntityType.AI;
+		}
+		*/
+		
+		return null;
+		
+	}
+	
+	/**
+	 *
+	 */
+	public static EntityType getTypeAt(Point p){
+		
+		return getTypeAt((int)p.getX(),(int)p.getY());
+		
+		
+	}
 	
 	
 }

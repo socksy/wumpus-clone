@@ -16,8 +16,8 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		//TODO initialise everything
-		Map.init();
 		GameLogic.init();
+		Map.init();
 		GUI window = new GUI();	
 		Player player1 = new Player();
 		
@@ -25,15 +25,20 @@ public class Main {
 		boolean running = true;
 		while (running) {
 			
+			window.render();
+			GameLogic.doTile(player1);
 			GameLogic.checkPercepts(player1);
 			window.outputPerceptionMessages(player1);
-			window.render();
+			
+			if(player1.isAlive() == false) running = false;
 			//TODO give feedback (where are we, what are we near?)
 			//TODO take input
 			//TODO act upon input
 		}
-		
+	
+		System.exit(0);
 	}
+	
 
 	
 }
