@@ -34,7 +34,8 @@ public class Player extends Entity {
 	
 	public boolean getPercept(String name){
 		
-		return percepts.get("name");
+		System.out.println(percepts.get(name));
+		return percepts.get(name);
 		
 	}
 	
