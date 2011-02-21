@@ -6,12 +6,8 @@ public class GameLogic {
 	static Point player_location = new Point(0,0);
 	static Point wumpus_location = new Point(0,1);
 	static Point[] nearby_locations ={new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)}; //north south east west from (0,0)
-	static Point[] visible_locations = {new Point(0,1),new Point(0,0),new Point(0,-1),new Point(-1,-1),new Point(1,0),new Point(1,1),new Point(-1,0),new Point(-1,1), new Point(1,-1)};
 	//static Point AILocation = new Point(0,0);
 	
-	//Create instances
-	private Player player = new Player();
-	private Wumpus wumpus = new Wumpus();
 	//static AI ai = new AI();
 	
 	static ArrayList<Point> history = new ArrayList<Point>();
@@ -146,12 +142,13 @@ public class GameLogic {
 	 * @return true if visible for the entity, false if not.
 	 */
 	public static boolean checkVisibility(int x,int y,EntityType type){
-		
-		Point entity_pos = new Point(); //position of the entity which is trying to 'see' tiles
+		int xpos = 0;
+		int ypos = 0;
 		
 		switch(type){
-			case PLAYER: //if the player is the entity we are checking for
-				entity_pos.setLocation(player_location); //set the location to that of the player 
+			case PLAYER: 
+				xpos = player_location.x;
+				ypos = player_location.y;
 				break;
 			/*case AI:
 				xpos = AI_location.x;
@@ -159,21 +156,12 @@ public class GameLogic {
 			//TODO add in for other entity types if we decide it is necessary, if not then possibly just hardcode for the player
 		}
 		
-		
-		//loop through the nearby locations to the player
-		for (Point i : visible_locations) {
-			Point current_iter =  new Point();
-			current_iter.setLocation(entity_pos.getX()+i.getX(),entity_pos.getY()+i.getY());
-			torusify(current_iter);
-			
-			if(current_iter.equals(new Point(x,y))){ //if any of these locations equal the tile we are trying to test
-				return true; //it's visible
-			}
-			
+		if( Math.abs(xpos-x) > 1 || Math.abs(ypos-y) > 1 ){
+			return false; //the tile is not visible
 		}
-		
-		return false;
-
+		else {
+			return true; //the tile is visible
+		}
 	}
 	
 	/**
@@ -310,10 +298,8 @@ public class GameLogic {
 	
 	public static void doTile(Player player){
 		
-		Point pos = player_location;
-		torusify(pos);
-		
-		switch(Map.getTypeAt(pos)){
+
+		switch(Map.getTypeAt((int)player_location.getX(),(int)player_location.getY())){
 		case PIT: player.die(); break;
 		}
 		
@@ -379,10 +365,11 @@ public class GameLogic {
 	}
 	
 	/**
-	 * 
+	 * Get entity type at certain point of the map
+	 * @param x the x pos (where 0,0 is top left hand corner)
+	 * @param y the y pos (where 0,0 is top left hand corner)
 	 */
 	public static EntityType getTypeAt(int x,int y){
-		
 		if(player_location.getX() == x && player_location.getY() == y){
 			return EntityType.PLAYER;
 		}
@@ -399,13 +386,11 @@ public class GameLogic {
 	}
 	
 	/**
-	 *
+	 * Get entity type at certain point of the map
+	 * @param p Point object with the co-ordinates to check for entity (0,0 is top left hand corner)
 	 */
 	public static EntityType getTypeAt(Point p){
-		
 		return getTypeAt((int)p.getX(),(int)p.getY());
-		
-		
 	}
 	
 	
