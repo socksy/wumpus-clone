@@ -12,6 +12,7 @@ import javax.swing.JComponent;
 public class DrawingCanvas extends JComponent {
 
 	private HashMap<String, Image> images = new HashMap<String, Image>();
+	private static int TILE_DIMENSIONS = 32;
 
 
 	DrawingCanvas(){
@@ -29,7 +30,7 @@ public class DrawingCanvas extends JComponent {
 		images.put("dirt_fog",t.getImage("dirt_fog.png"));
 		images.put("pit_fog",t.getImage("dirt_fog.png"));
 
-		setSize(32*Map.MAP_DIMENSIONS,32*Map.MAP_DIMENSIONS);
+		setSize(TILE_DIMENSIONS*Map.MAP_DIMENSIONS,TILE_DIMENSIONS*Map.MAP_DIMENSIONS);
 
 
 
@@ -37,7 +38,7 @@ public class DrawingCanvas extends JComponent {
 
 	public void paint(Graphics g){
 
-		g.fillRect(0,0,Map.MAP_DIMENSIONS*32,Map.MAP_DIMENSIONS*32);
+		g.fillRect(0,0,Map.MAP_DIMENSIONS*TILE_DIMENSIONS,Map.MAP_DIMENSIONS*TILE_DIMENSIONS);
 
 		for(int i=0; i<Map.MAP_DIMENSIONS; i++){
 			for(int j=0; j<Map.MAP_DIMENSIONS; j++){
@@ -56,36 +57,36 @@ public class DrawingCanvas extends JComponent {
 				//if tile is discovered by the player and is near enough to be visible then display normally
 				if(tileIsDiscovered && GameLogic.checkVisibility(j,i,EntityType.PLAYER)){
 					//draw tiles
-					if(Map.getTypeAt(j,i) == TileType.PIT){ //if a pit, draw a 32x32 pit tile in that tile space
-						g.drawImage(images.get("dirt"),j*32,i*32,32,32,null);//draw the dirt underneath 
-						g.drawImage(images.get("pit"), j*32, i*32, 32, 32, null);
-					} else if(Map.getTypeAt(j,i) == TileType.TREASURE){ //if the treasure is on this tile, draw a 32x32 treasure tile in that tile space
-						g.drawImage(images.get("dirt"),j*32,i*32,32,32,null); //draw the dirt underneath 
-						g.drawImage(images.get("treasure"), j*32, i*32, 32, 32, null);	
+					if(Map.getTypeAt(j,i) == TileType.PIT){ //if a pit, draw a TILE_DIMENSIONSxTILE_DIMENSIONS pit tile in that tile space
+						g.drawImage(images.get("dirt"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);//draw the dirt underneath 
+						g.drawImage(images.get("pit"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null);
+					} else if(Map.getTypeAt(j,i) == TileType.TREASURE){ //if the treasure is on this tile, draw a TILE_DIMENSIONSxTILE_DIMENSIONS treasure tile in that tile space
+						g.drawImage(images.get("dirt"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null); //draw the dirt underneath 
+						g.drawImage(images.get("treasure"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null);	
 					
 					} else if(Map.getTypeAt(j,i) == TileType.EXIT){ //if an exit, draw the exit tile
-						g.drawImage(images.get("exit"),j*32,i*32,32,32,null);
+						g.drawImage(images.get("exit"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
 					} else if(Map.getTypeAt(j,i) == TileType.BAT){
-						g.drawImage(images.get("bat"),j*32,i*32,32,32,null);
+						g.drawImage(images.get("bat"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
 					}
 					else { //if not a special tile
-						g.drawImage(images.get("dirt"),j*32,i*32,32,32,null); //draw the dirt standard tile
+						g.drawImage(images.get("dirt"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null); //draw the dirt standard tile
 					}
 
 				}
 				else if(tileIsDiscovered && !GameLogic.checkVisibility(j,i,EntityType.PLAYER)) {
 					
-					g.drawImage(images.get("dirt_fog"),j*32,i*32,32,32,null);	
+					g.drawImage(images.get("dirt_fog"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);	
 
 				}
 
 				//draw entities on top
 				
 				if(GameLogic.getTypeAt(j,i) == EntityType.PLAYER){
-					g.drawImage(images.get("player"), j*32, i*32, 32, 32, null); 
+					g.drawImage(images.get("player"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null); 
 				}
 				else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i,EntityType.PLAYER)){
-					g.drawImage(images.get("wumpus"),j*32,i*32,32,32,null);
+					g.drawImage(images.get("wumpus"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
 				}
 				
 				

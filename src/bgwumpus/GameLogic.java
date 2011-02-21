@@ -338,17 +338,7 @@ public class GameLogic {
 		
 	}
 	
-	/**
-	 * Translates player by amount specified
-	 * @param dx integer amount to translate in x axis
-	 * @param dy integer amount to translate in y axis
-	 */
-	public static void movePlayer(int dx,int dy){
-		player_location.translate(dx,dy);
-		torusify(player_location);
-		history.add(new Point(player_location));
-		player_steps++;
-	}
+
 	
 	/**
 	 * Translates entity  by amount specified
@@ -358,6 +348,7 @@ public class GameLogic {
 	public static void moveEntity(int dx,int dy,EntityType entity){	
 		
 		Point position = getEntityLocation(entity);
+		position.translate(dx, dy);
 		torusify(position);
 		history.add(new Point(position));
 		setEntityLocation(position,entity);
