@@ -23,7 +23,7 @@ public class AI extends Entity {
 	
 	public boolean getPercept(String name){
 		
-		return percepts.get("name");
+		return percepts.get(name);
 		
 	}
 	

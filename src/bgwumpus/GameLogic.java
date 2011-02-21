@@ -177,11 +177,11 @@ public class GameLogic {
 		
 		ArrayList<String> perception_messages = new ArrayList<String>();
 				
-			if(player.getPercept("pit")){
+			if(player.getPercept("pits")){
 				perception_messages.add("You feel a breeze");
 			}
-			
-			if(player.getPercept("bat")){
+		
+			if(player.getPercept("bats")){
 				perception_messages.add("You hear a flapping noise");				
 			}
 			if(player.getPercept("treasure")){
@@ -190,7 +190,7 @@ public class GameLogic {
 			if(player.getPercept("wumpus")){
 				perception_messages.add("Eurgh, what is that smell");		
 			}
-			
+						
 			return perception_messages;
 	
 		
@@ -201,11 +201,11 @@ public class GameLogic {
 		ArrayList<String> perception_messages = new ArrayList<String>();
 
 		
-		if(ai.getPercept("pit")){
+		if(ai.getPercept("pits")){
 			perception_messages.add("You feel a breeze");
 		}
 		
-		if(ai.getPercept("bat")){
+		if(ai.getPercept("bats")){
 			perception_messages.add("You hear a flapping noise");				
 		}
 		if(ai.getPercept("treasure")){
@@ -225,20 +225,19 @@ public class GameLogic {
 	 */
 	public static void checkPercepts(Player player){
 		
-		Point pos = new Point(0,0);
-
+			player.unsetAllPercepts();
 		
 			//loop through nearby locations e.g 1 tile North, South, East and West
 			for(Point i : nearby_locations) {
 				
 				Point current_iter =  new Point();
-				current_iter.setLocation(pos.getX()+i.getX(),pos.getY()+i.getY());
+				current_iter.setLocation(player_location.getX()+i.getX(),player_location.getY()+i.getY());
 				torusify(current_iter);
 				
 				switch(Map.getTypeAt(current_iter)){
 				
-					case PIT: player.setPercept("pit"); break;
-					case BAT: player.setPercept("bat"); break;
+					case PIT: player.setPercept("pits"); break;
+					case BAT: player.setPercept("bats"); break;
 					case TREASURE: player.setPercept("treasure"); break;
 					default: break;
 					
@@ -253,20 +252,20 @@ public class GameLogic {
 	 */
 	public static void checkPercepts(AI ai){
 		
-		Point pos = new Point(0,0);
+		ai.unsetAllPercepts();
 
-	
+		
 		//loop through nearby locations e.g 1 tile North, South, East and West
 		for(Point i : nearby_locations) {
 
 			Point current_iter =  new Point();
-			current_iter.setLocation(pos.getX()+i.getX(),pos.getY()+i.getY());
+			//TODO current_iter.setLocation(ai_location.getX()+i.getX(),ai_location.getY()+i.getY());
 			torusify(current_iter);
 
 			switch(Map.getTypeAt(current_iter)){
 
-			case PIT: ai.setPercept("pit"); break;
-			case BAT: ai.setPercept("bat"); break;
+			case PIT: ai.setPercept("pits"); break;
+			case BAT: ai.setPercept("bats"); break;
 			case TREASURE: ai.setPercept("treasure"); break;
 			default: break;
 

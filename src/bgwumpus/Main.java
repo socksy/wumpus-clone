@@ -25,6 +25,7 @@ public class Main {
 		boolean running = true;
 		while (running) {
 			
+			GameLogic.checkPercepts(player1);
 			window.outputPerceptionMessages(player1);
 			window.render();
 			//TODO give feedback (where are we, what are we near?)
