@@ -8,7 +8,6 @@ public class GameLogic {
 	static Point[] nearby_locations ={new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)}; //north south east west from (0,0)
 	//static Point AILocation = new Point(0,0);
 	
-
 	//static AI ai = new AI();
 	
 	static ArrayList<Point> history = new ArrayList<Point>();
@@ -366,10 +365,11 @@ public class GameLogic {
 	}
 	
 	/**
-	 * 
+	 * Get entity type at certain point of the map
+	 * @param x the x pos (where 0,0 is top left hand corner)
+	 * @param y the y pos (where 0,0 is top left hand corner)
 	 */
 	public static EntityType getTypeAt(int x,int y){
-		
 		if(player_location.getX() == x && player_location.getY() == y){
 			return EntityType.PLAYER;
 		}
@@ -386,13 +386,11 @@ public class GameLogic {
 	}
 	
 	/**
-	 *
+	 * Get entity type at certain point of the map
+	 * @param p Point object with the co-ordinates to check for entity (0,0 is top left hand corner)
 	 */
 	public static EntityType getTypeAt(Point p){
-		
 		return getTypeAt((int)p.getX(),(int)p.getY());
-		
-		
 	}
 	
 	
