@@ -11,8 +11,6 @@ public class Map {
 	
 	final static public int MAP_DIMENSIONS = 9; //FOR NOW
 	static Tile[][] map_array = new Tile[MAP_DIMENSIONS][MAP_DIMENSIONS];
-	static Tile wumpus_start_location = new StandardTile();
-	static Tile player_start_location = new StandardTile();
 	
 	
 	/**
@@ -38,6 +36,9 @@ public class Map {
 		
 		//TODO possibly make random generation ensure that the treasure is a sensible distance away from both player and exit
 		
+		
+		Point generated_point = new Point();
+		
 		//fill the map with standard tiles
 		for(int i=0; i<MAP_DIMENSIONS; i++){
 			for(int j=0; j<MAP_DIMENSIONS; j++){
@@ -57,7 +58,11 @@ public class Map {
 		for(int i=0; i<MAP_DIMENSIONS; i++){
 			for(int j=0; j<MAP_DIMENSIONS; j++){
 				
-				int random_number =  random.nextInt(101); //generate a random number between 0 and 100
+				//ensure the player and wumpus are not on this tile before generating pits/bats
+				if(!GameLogic.player_location.equals(new Point(j,i)) && !GameLogic.player_location.equals(new Point(j,i)) ){
+					
+				
+				int random_number = random.nextInt(101); //generate a random number between 0 and 100
 				
 				if(random_number <= PitProbability){
 					map_array[j][i] = new PitTile();
@@ -65,34 +70,38 @@ public class Map {
 				if(random_number <= BatProbability){
 					map_array[j][i] = new BatTile();
 				}
+				
+				}
+				
 			}
 		}
 		
 		
 		
 		
-		
-		map_array[(int)GameLogic.getEntityLocation(EntityType.WUMPUS).getX()][(int)GameLogic.getEntityLocation(EntityType.WUMPUS).getY()] = wumpus_start_location; //set the wumpus start location to the corresponding coordinates
-		map_array[(int)GameLogic.getEntityLocation(EntityType.PLAYER).getX()][(int)GameLogic.getEntityLocation(EntityType.PLAYER).getY()] = player_start_location; //set the player start location to the corresponding coordinates
-		
+				
 		int x_index = random.nextInt(Map.MAP_DIMENSIONS);
 		int y_index = random.nextInt(Map.MAP_DIMENSIONS);
-
+		generated_point.setLocation(x_index,y_index);
 		
 		//pick a location for the exit
-		while(map_array[x_index][y_index].equals(wumpus_start_location) || map_array[x_index][y_index].equals(player_start_location)) {
+		while(GameLogic.player_location.equals(generated_point) || GameLogic.wumpus_location.equals(generated_point)) {
 			
 			x_index = random.nextInt(Map.MAP_DIMENSIONS);
-			y_index = random.nextInt(Map.MAP_DIMENSIONS);		
+			y_index = random.nextInt(Map.MAP_DIMENSIONS);
+			generated_point.setLocation(x_index,y_index);
+
 		} 
 		
 		map_array[x_index][y_index] = new ExitTile();
 		
 		//pick a location for the treasure
-		while(map_array[x_index][y_index].equals(wumpus_start_location) || map_array[x_index][y_index].equals(player_start_location) || map_array[x_index][y_index].getType() == TileType.EXIT) {
+		while(GameLogic.player_location.equals(generated_point) || GameLogic.wumpus_location.equals(generated_point) || map_array[x_index][y_index].getType() == TileType.EXIT) {
 			
 			x_index = random.nextInt(Map.MAP_DIMENSIONS);
-			y_index = random.nextInt(Map.MAP_DIMENSIONS);		
+			y_index = random.nextInt(Map.MAP_DIMENSIONS);
+			generated_point.setLocation(x_index,y_index);
+
 		} 
 		
 		map_array[x_index][y_index] = new TreasureTile();
