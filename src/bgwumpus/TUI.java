@@ -16,12 +16,12 @@ public class TUI implements UserInterface {
 		
 	}
 	
-	public void outputPerceptionMessages(Player player){
+	public void outputPerceptionMessages(PlayableEntity player){
 		
 		
 	}
 	
-	public void outputPerceptionMessages(AI ai){
+	public void outputPerceptionMessages(PlayableEntity ai){
 		
 	}
 
