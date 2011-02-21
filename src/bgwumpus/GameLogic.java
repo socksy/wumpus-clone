@@ -8,9 +8,7 @@ public class GameLogic {
 	static Point[] nearby_locations ={new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)}; //north south east west from (0,0)
 	//static Point AILocation = new Point(0,0);
 	
-	//Create instances
-	private Player player = new Player();
-	private Wumpus wumpus = new Wumpus();
+
 	//static AI ai = new AI();
 	
 	static ArrayList<Point> history = new ArrayList<Point>();
