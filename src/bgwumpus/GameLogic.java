@@ -6,6 +6,7 @@ public class GameLogic {
 	static Point player_location = new Point(0,0);
 	static Point wumpus_location = new Point(0,1);
 	static Point[] nearby_locations ={new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)}; //north south east west from (0,0)
+	static Point[] visible_locations = {new Point(0,1),new Point(0,0),new Point(0,-1),new Point(-1,-1),new Point(1,0),new Point(1,1),new Point(-1,0),new Point(-1,1), new Point(1,-1)};
 	//static Point AILocation = new Point(0,0);
 	
 	//Create instances
@@ -145,13 +146,12 @@ public class GameLogic {
 	 * @return true if visible for the entity, false if not.
 	 */
 	public static boolean checkVisibility(int x,int y,EntityType type){
-		int xpos = 0;
-		int ypos = 0;
+		
+		Point entity_pos = new Point(); //position of the entity which is trying to 'see' tiles
 		
 		switch(type){
-			case PLAYER: 
-				xpos = player_location.x;
-				ypos = player_location.y;
+			case PLAYER: //if the player is the entity we are checking for
+				entity_pos.setLocation(player_location); //set the location to that of the player 
 				break;
 			/*case AI:
 				xpos = AI_location.x;
@@ -159,12 +159,21 @@ public class GameLogic {
 			//TODO add in for other entity types if we decide it is necessary, if not then possibly just hardcode for the player
 		}
 		
-		if( Math.abs(xpos-x) > 1 || Math.abs(ypos-y) > 1 ){
-			return false; //the tile is not visible
+		
+		//loop through the nearby locations to the player
+		for (Point i : visible_locations) {
+			Point current_iter =  new Point();
+			current_iter.setLocation(entity_pos.getX()+i.getX(),entity_pos.getY()+i.getY());
+			torusify(current_iter);
+			
+			if(current_iter.equals(new Point(x,y))){ //if any of these locations equal the tile we are trying to test
+				return true; //it's visible
+			}
+			
 		}
-		else {
-			return true; //the tile is visible
-		}
+		
+		return false;
+
 	}
 	
 	/**
@@ -301,8 +310,10 @@ public class GameLogic {
 	
 	public static void doTile(Player player){
 		
-
-		switch(Map.getTypeAt((int)player_location.getX(),(int)player_location.getY())){
+		Point pos = player_location;
+		torusify(pos);
+		
+		switch(Map.getTypeAt(pos)){
 		case PIT: player.die(); break;
 		}
 		
