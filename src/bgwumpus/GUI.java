@@ -41,7 +41,7 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 
 	}
 	
-	public void outputPerceptionMessages(Player player){
+	public void outputPerceptionMessages(PlayableEntity player){
 		
 		
 		ArrayList<String> messages = GameLogic.getPerceptionMessages(player);
@@ -60,7 +60,7 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 		
 	}
 	
-	public void outputPerceptionMessages(AI ai){
+	public void outputPerceptionMessages(PlayableEntity ai){
 		
 		ArrayList<String> messages = GameLogic.getPerceptionMessages(ai);
 		

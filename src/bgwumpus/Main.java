@@ -8,7 +8,6 @@ package bgwumpus;
  *TODO Make design good object oriented, do proper encapsulation
  *
  */
-//Note to self: lucid chart
 public class Main {
 
 	/**
@@ -16,10 +15,17 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		//TODO initialise everything
-		GameLogic.init();
-		Map.init();
 		GUI window = new GUI();	
+		
+		
+		//UNCOMMENT FOR PLAYER MODE
+		//GameLogic.init(EntityType.PLAYER);
+		//AND COMMENT THIS OUT
+		GameLogic.init(EntityType.AI);
 		Player player1 = new Player();
+		PlayableEntity ai = new AI();
+		
+		Map.init();
 		
 		boolean running = true;
 		boolean in_game = true;
@@ -29,23 +35,28 @@ public class Main {
 			
 			//Game loop
 			while(in_game){
-			
-			window.render();
-			GameLogic.doTile(player1);
-			GameLogic.checkPercepts(player1);
-			window.outputPerceptionMessages(player1);
-			
-			window.render();
 
-			if(!player1.isAlive()) running = false;
-			//TODO give feedback (where are we, what are we near?)
-			//TODO take input
-			//TODO act upon input
+				window.render();
+				if (GameLogic.playable_mode) {
+					GameLogic.doTile(player1);
+					GameLogic.checkPercepts(player1);
+					window.outputPerceptionMessages(player1);
+					window.render();	
+					if(!player1.isAlive()){ 
+						running = false;
+					}
+				} else {
+					GameLogic.doTile(ai);
+					GameLogic.checkPercepts(ai);
+					window.outputPerceptionMessages(ai);
+					window.render();	
+					if(!ai.isAlive()) {
+						running = false;
+					}
+				}
+				
+				
 			}
 		}
-	
 	}
-	
-
-	
 }

@@ -59,7 +59,7 @@ public class Map {
 			for(int j=0; j<MAP_DIMENSIONS; j++){
 				
 				//ensure the player and wumpus are not on this tile before generating pits/bats
-				if(!GameLogic.player_location.equals(new Point(j,i)) && !GameLogic.player_location.equals(new Point(j,i)) ){
+				if(!GameLogic.location.equals(new Point(j,i)) && !GameLogic.location.equals(new Point(j,i)) ){
 					
 				
 				int random_number = random.nextInt(101); //generate a random number between 0 and 100
@@ -85,7 +85,7 @@ public class Map {
 		generated_point.setLocation(x_index,y_index);
 		
 		//pick a location for the exit
-		while(GameLogic.player_location.equals(generated_point) || GameLogic.wumpus_location.equals(generated_point)) {
+		while(GameLogic.location.equals(generated_point) || GameLogic.wumpus_location.equals(generated_point)) {
 			
 			x_index = random.nextInt(Map.MAP_DIMENSIONS);
 			y_index = random.nextInt(Map.MAP_DIMENSIONS);
@@ -96,7 +96,7 @@ public class Map {
 		map_array[x_index][y_index] = new ExitTile();
 		
 		//pick a location for the treasure
-		while(GameLogic.player_location.equals(generated_point) || GameLogic.wumpus_location.equals(generated_point) || map_array[x_index][y_index].getType() == TileType.EXIT) {
+		while(GameLogic.location.equals(generated_point) || GameLogic.wumpus_location.equals(generated_point) || map_array[x_index][y_index].getType() == TileType.EXIT) {
 			
 			x_index = random.nextInt(Map.MAP_DIMENSIONS);
 			y_index = random.nextInt(Map.MAP_DIMENSIONS);
