@@ -12,6 +12,7 @@ import java.util.Set;
 public class Player extends Entity {
 	
 	private HashMap<String,Boolean> percepts = new HashMap<String,Boolean>();
+	private boolean alive;
 
 
 	/**
@@ -19,6 +20,7 @@ public class Player extends Entity {
 	 */
 	public Player() {
 		type = EntityType.PLAYER;
+		alive = true;
 		percepts.put("pits",false);
 		percepts.put("bats",false);
 		percepts.put("treasure", false);
@@ -52,6 +54,18 @@ public class Player extends Entity {
 			
 		}
 		
+		
+	}
+	
+	public void die(){
+		
+		alive = false;
+		
+	}
+	
+	public boolean isAlive(){
+		
+		return alive;
 		
 	}
 	

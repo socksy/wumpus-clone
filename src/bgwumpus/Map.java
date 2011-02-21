@@ -11,8 +11,9 @@ public class Map {
 	
 	final static public int MAP_DIMENSIONS = 9; //FOR NOW
 	static Tile[][] map_array = new Tile[MAP_DIMENSIONS][MAP_DIMENSIONS];
+	static Tile wumpus_start_location = new StandardTile();
+	static Tile player_start_location = new StandardTile();
 	
-	//generateMap();
 	
 	/**
 	 * Initialises starting locations, creates map, etc.
@@ -35,42 +36,79 @@ public class Map {
 	 */
 	private static void generateMap(){
 		
-		Random random = new Random();
-		boolean treasureSet = false;
-		boolean exitSet = false;
+		//TODO possibly make random generation ensure that the treasure is a sensible distance away from both player and exit
 		
+		//fill the map with standard tiles
+		for(int i=0; i<MAP_DIMENSIONS; i++){
+			for(int j=0; j<MAP_DIMENSIONS; j++){
+			
+				map_array[j][i] = new StandardTile();
+			
+			}
+		}		
+		
+		int PitProbability = 20; //the probability of a pit tile being generated, out of 100
+		int BatProbability = 5; //the probability of a tile being generated, out of 100
+
+		Random random = new Random();
+		
+		
+		//fill the map with pits and bats randomly
 		for(int i=0; i<MAP_DIMENSIONS; i++){
 			for(int j=0; j<MAP_DIMENSIONS; j++){
 				
-				int random_number = Math.abs(random.nextInt() % 20)+1;
+				int random_number =  random.nextInt(101); //generate a random number between 0 and 100
 				
-				switch(random_number){
-				
-				case 1:
-				case 2:
-				case 3:
-					//leave it as a standard tile
-					break;
-				case 4: 
-					map_array[i][j] = new BatTile();
-					break;
-				case 5:
-					map_array[i][j] = new PitTile();
-					break;
-				case 6:
-					if(!treasureSet){
-					map_array[i][j] = new TreasureTile(); treasureSet = true;
-					}
-				case 7:
-					if(!exitSet){
-					map_array[i][j] = new ExitTile(); exitSet = true;
-					}
+				if(random_number <= PitProbability){
+					map_array[j][i] = new PitTile();
 				}
-							
+				if(random_number <= BatProbability){
+					map_array[j][i] = new BatTile();
+				}
 			}
 		}
 		
+		
+		
+		
+		
+		map_array[(int)GameLogic.getEntityLocation(EntityType.WUMPUS).getX()][(int)GameLogic.getEntityLocation(EntityType.WUMPUS).getY()] = wumpus_start_location; //set the wumpus start location to the corresponding coordinates
+		map_array[(int)GameLogic.getEntityLocation(EntityType.PLAYER).getX()][(int)GameLogic.getEntityLocation(EntityType.PLAYER).getY()] = player_start_location; //set the player start location to the corresponding coordinates
+		
+		int x_index = random.nextInt(Map.MAP_DIMENSIONS);
+		int y_index = random.nextInt(Map.MAP_DIMENSIONS);
+
+		
+		//pick a location for the exit
+		while(map_array[x_index][y_index].equals(wumpus_start_location) || map_array[x_index][y_index].equals(player_start_location)) {
+			
+			x_index = random.nextInt(Map.MAP_DIMENSIONS);
+			y_index = random.nextInt(Map.MAP_DIMENSIONS);		
+		} 
+		
+		map_array[x_index][y_index] = new ExitTile();
+		
+		//pick a location for the treasure
+		while(map_array[x_index][y_index].equals(wumpus_start_location) || map_array[x_index][y_index].equals(player_start_location) || map_array[x_index][y_index].getType() == TileType.EXIT) {
+			
+			x_index = random.nextInt(Map.MAP_DIMENSIONS);
+			y_index = random.nextInt(Map.MAP_DIMENSIONS);		
+		} 
+		
+		map_array[x_index][y_index] = new TreasureTile();
+		
+		
+		//TODO sort the tiles randomly?
+		
+		
+		
+		
+		
+		
 	}
+	
+	
+	
 	
 	/**
 	 * Prints map state
