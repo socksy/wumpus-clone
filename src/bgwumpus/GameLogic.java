@@ -16,6 +16,8 @@ public class GameLogic {
 	
 	static ArrayList<Point> history = new ArrayList<Point>();
 	
+	static int player_steps = 0;
+	
 	
 	
 	/** 
