@@ -19,13 +19,14 @@ public class Main {
 		Map.init();
 		GameLogic.init();
 		GUI window = new GUI();	
+		Player player1 = new Player();
 		
 		//Game loop
 		boolean running = true;
 		while (running) {
 			
+			window.outputPerceptionMessages(player1);
 			window.render();
-
 			//TODO give feedback (where are we, what are we near?)
 			//TODO take input
 			//TODO act upon input

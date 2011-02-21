@@ -15,5 +15,14 @@ public class TUI implements UserInterface {
 		
 		
 	}
+	
+	public void outputPerceptionMessages(Player player){
+		
+		
+	}
+	
+	public void outputPerceptionMessages(AI ai){
+		
+	}
 
 }

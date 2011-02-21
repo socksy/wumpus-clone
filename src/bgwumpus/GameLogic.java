@@ -9,19 +9,20 @@ public class GameLogic {
 	//static Point AILocation = new Point(0,0);
 	
 	//Create instances
-	static Player player = new Player();
-	static Wumpus wumpus = new Wumpus();
+	private Player player = new Player();
+	private Wumpus wumpus = new Wumpus();
 	//static AI ai = new AI();
 	
 	static ArrayList<Point> history = new ArrayList<Point>();
 	
 	
 	
-	/**
+	/** 
 	 * Gets a 2 dimensional array of Entities in order to render on top
 	 * Returns objects directly, gives flexibility to know which object is which - something not provided by just type information
 	 * @return 2D array of Entity objects
-	 */
+	 * @deprecated
+	 
 	public static Entity[][] getEntityMap()
 	{
 		Entity[][] entity_map = new Entity[Map.MAP_DIMENSIONS][Map.MAP_DIMENSIONS];
@@ -39,7 +40,7 @@ public class GameLogic {
 			}
 		}
 		return entity_map;
-	}
+	}*/
 
 	/**
 	 * @return the entity location
@@ -165,20 +166,68 @@ public class GameLogic {
 			return true;
 		
 		}
+		
 	}
 	
+	/** Gets the list of relevant perception messages
+	 * @param the player object
+	 * @return an array list of messages based on the perception of the surrounding tiles
+	 */
+	public static ArrayList<String> getPerceptionMessages(Player player){
+		
+		ArrayList<String> perception_messages = new ArrayList<String>();
+				
+			if(player.getPercept("pit")){
+				perception_messages.add("You feel a breeze");
+			}
+			
+			if(player.getPercept("bat")){
+				perception_messages.add("You hear a flapping noise");				
+			}
+			if(player.getPercept("treasure")){
+				perception_messages.add("You catch a sparkle in the corner of your eye");				
+			}
+			if(player.getPercept("wumpus")){
+				perception_messages.add("Eurgh, what is that smell");		
+			}
+			
+			return perception_messages;
+	
+		
+	}
+	
+	public static ArrayList<String> getPerceptionMessages(AI ai){
+		
+		ArrayList<String> perception_messages = new ArrayList<String>();
+
+		
+		if(ai.getPercept("pit")){
+			perception_messages.add("You feel a breeze");
+		}
+		
+		if(ai.getPercept("bat")){
+			perception_messages.add("You hear a flapping noise");				
+		}
+		if(ai.getPercept("treasure")){
+			perception_messages.add("You catch a sparkle in the corner of your eye");				
+		}
+		if(ai.getPercept("wumpus")){
+			perception_messages.add("Eurgh, what is that smell");		
+		}
+		
+		return perception_messages;
+		
+		
+	}
 	
 	/**
-	 * @param type the type of the entity you want to check the surroundings of, normally player or AI
+	 * @param player the player object
 	 */
-	public static void checkPercepts(EntityType type){
+	public static void checkPercepts(Player player){
 		
 		Point pos = new Point(0,0);
+
 		
-		
-		//TODO Condense into 1, these blocks are mostly the same
-		if(type == EntityType.PLAYER){
-			
 			//loop through nearby locations e.g 1 tile North, South, East and West
 			for(Point i : nearby_locations) {
 				
@@ -194,42 +243,36 @@ public class GameLogic {
 					default: break;
 					
 				}
-				
-				
-				
+			
+			}	
+		
+	}
+	
+	/**
+	 * @param ai the ai object
+	 */
+	public static void checkPercepts(AI ai){
+		
+		Point pos = new Point(0,0);
+
+	
+		//loop through nearby locations e.g 1 tile North, South, East and West
+		for(Point i : nearby_locations) {
+
+			Point current_iter =  new Point();
+			current_iter.setLocation(pos.getX()+i.getX(),pos.getY()+i.getY());
+			torusify(current_iter);
+
+			switch(Map.getTypeAt(current_iter)){
+
+			case PIT: ai.setPercept("pit"); break;
+			case BAT: ai.setPercept("bat"); break;
+			case TREASURE: ai.setPercept("treasure"); break;
+			default: break;
+
 			}
-			
 		}
-		else if(type == EntityType.AI){
-			
-			//loop through nearby locations e.g 1 tile North, South, East and West
-			for(Point i : nearby_locations) {
-				
-				Point current_iter =  new Point();
-				current_iter.setLocation(pos.getX()+i.getX(),pos.getY()+i.getY());
-				torusify(current_iter);
-				
-				switch(Map.getTypeAt(current_iter)){
-				
-					case PIT: player.setPercept("pit"); break;
-					case BAT: player.setPercept("bat"); break;
-					case TREASURE: player.setPercept("treasure"); break;
-					default: break;
-					
-				}
-				
-				
-				
-			}
-			
-			
-		}
-		
-		
-		
-		
-		
-		
+	
 	}
 	
 	/**
