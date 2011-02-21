@@ -42,14 +42,14 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	public void outputPerceptionMessages(Player player){
 		
 		ArrayList<String> messages = GameLogic.getPerceptionMessages(player);
-		
+
 		if(messages != null){
 			for(int i=0; i<messages.size(); i++){
 				
 				System.out.println(messages.get(i));
-				
 			}
 		}
+
 
 		
 	}
