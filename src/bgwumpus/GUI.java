@@ -24,7 +24,7 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 		UserInputHandler inputHandler = new UserInputHandler(); 
 		addKeyListener(inputHandler);
 
-		setSize(Map.MAP_DIMENSIONS*32,Map.MAP_DIMENSIONS*32+20);
+		setSize(Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS,Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS+20);
 		add(canvas);
 
 
@@ -48,16 +48,13 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 
 		if(messages != null && messages.size() != messageListSize){
 			for(int i=0; i<messages.size(); i++){
-				
-				System.out.println(messages.get(i));
+				System.out.print(" \r");
+				System.out.println(messages.get(i) + "\r");
 			}
 		}
 		
 		messageListSize = messages.size();
-		
-
-
-		
+			
 	}
 	
 	public void outputPerceptionMessages(AI ai){

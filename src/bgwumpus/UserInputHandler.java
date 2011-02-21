@@ -51,6 +51,8 @@ public class UserInputHandler implements KeyListener {
 		case KeyEvent.VK_UP:  break;
 		case KeyEvent.VK_DOWN:  break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break; //quit upon hitting escape
+		case KeyEvent.VK_R: GameLogic.map_revealed = true; break; 
+
 		}
 		
 	}
@@ -66,6 +68,7 @@ public class UserInputHandler implements KeyListener {
 		case KeyEvent.VK_LEFT: GameLogic.moveEntity(-1, 0,EntityType.PLAYER); break;
 		case KeyEvent.VK_UP:  GameLogic.moveEntity(0, -1,EntityType.PLAYER); break;
 		case KeyEvent.VK_DOWN:  GameLogic.moveEntity(0, 1,EntityType.PLAYER); break;
+		case KeyEvent.VK_R: GameLogic.map_revealed = false; break; 
 		}
 		
 		

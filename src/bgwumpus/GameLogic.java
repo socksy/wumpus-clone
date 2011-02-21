@@ -17,6 +17,7 @@ public class GameLogic {
 	static ArrayList<Point> history = new ArrayList<Point>();
 	
 	static int player_steps = 0;
+	static boolean map_revealed = false;
 	
 	
 	/** 
@@ -335,6 +336,7 @@ public class GameLogic {
 		} while(Map.getTypeAt(location) != TileType.PIT && location != wumpus_location && location != getEntityLocation(entity)); 
 		
 		setEntityLocation(location,entity);
+		history.add(location);
 		
 	}
 	
