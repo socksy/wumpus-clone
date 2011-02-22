@@ -5,7 +5,10 @@ import java.util.HashMap;
 public abstract class PlayableEntity extends Entity {
 	protected static int player_steps = 0;
 	protected HashMap<String,Boolean> percepts = new HashMap<String,Boolean>();
-	protected boolean alive;
+	protected boolean alive = true;
+	protected boolean got_treasure = false;
+	protected int score = 0;
+	protected boolean won_game = false;
 
 	public PlayableEntity() {
 		super();
@@ -69,5 +72,36 @@ public abstract class PlayableEntity extends Entity {
 	public void die() {
 		alive = false;
 	}
-
+	
+	/**
+	 * Picked up treasure, can now leave the exit
+	 */
+	public void pickUpTreasure() {
+		got_treasure = true;
+	}
+	
+	/**
+	 * Check if treasure has been picked up yet
+	 * @return boolean
+	 */
+	public boolean hasPickedUpTreasure() {
+		return got_treasure;
+	}
+	
+	/**
+	 * Won the game!
+	 */
+	public void winGame() {
+		score +=50;
+		won_game = true;
+	}
+	
+	/**
+	 * Has it won the game yet?
+	 * @return boolean
+	 */
+	public boolean hasWon() {
+		return won_game;
+	}
+	
 }

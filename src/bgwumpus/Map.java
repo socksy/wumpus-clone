@@ -39,8 +39,8 @@ public class Map {
 		
 		Point generated_point = new Point();	
 		
-		int PitProbability = 20; //the probability of a pit tile being generated, out of 100
-		int BatProbability = 2; //the probability of a tile being generated, out of 100
+		int PitProbability = 10; //the probability of a pit tile being generated, out of 100
+		int BatProbability = 1; //the probability of a tile being generated, out of 100
 
 		Random random = new Random();
 		int x_index = 0;
