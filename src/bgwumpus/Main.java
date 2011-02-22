@@ -26,6 +26,8 @@ public class Main {
 		Player player1 = new Player();
 		PlayableEntity ai = new AI();
 		ReactiveAI react = new ReactiveAI(ai);
+		GeneticAI gen = new GeneticAI((AI)ai);
+		
 		GUI window = new GUI(ai);	
 
 		
@@ -55,7 +57,8 @@ public class Main {
 					//SmartAI.init(ai);
 					//SmartAI.reactToPercepts();
 					//SmartAI.moveSensibleDirection();
-					react.moveDirection();
+					//react.moveDirection();
+					gen.doSomething();
 					GameLogic.doTile(ai);
 					GameLogic.checkPercepts(ai);
 					window.outputMessages(ai);
@@ -68,7 +71,7 @@ public class Main {
 					}
 					
 					try {
-						Thread.sleep(50);
+						Thread.sleep(500);
 						
 					} catch (Exception e) {
 						// TODO: handle exception

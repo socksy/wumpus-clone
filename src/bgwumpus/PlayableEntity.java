@@ -149,10 +149,25 @@ public abstract class PlayableEntity extends Entity {
 		
 		
 	}
+	
+	
+	public void shootLeft() {
+		shoot(0);
+	}
+	
+	public void shootUp() {
+		shoot(1);
+	}
+	
+	public void shootRight() {
+		shoot(2);
+	}
+	
+	public void shootDown() {
+		shoot(3);
+	}
 
 	public int getScore() {
-		// TODO Auto-generated method stub
-		
 		return score;
 	}
 	
