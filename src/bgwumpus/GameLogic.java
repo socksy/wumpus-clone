@@ -209,10 +209,9 @@ public class GameLogic {
 	/** Checks if the contents of the tile is visible to an entity or if it's too far away
 	 * @param x the x position of the tile 
 	 * @param y the y position of the tile
-	 * @param type the entity type, normally the player
 	 * @return true if visible for the entity, false if not.
 	 */
-	public static boolean checkVisibility(int x,int y,EntityType type){
+	public static boolean checkVisibility(int x,int y){
 		
 		Point entity_pos = new Point(); //position of the entity which is trying to 'see' tiles
 		entity_pos.setLocation(location); //set the location to that of the entity 

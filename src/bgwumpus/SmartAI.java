@@ -63,11 +63,9 @@ public class SmartAI {
 				Point current_iter = new Point();
 				
 				for(Point point : GameLogic.nearby_locations){
-					
-					
 					current_iter.setLocation(pos.getX()+point.getX(),pos.getY()+point.getY());
 					GameLogic.torusify(current_iter);
-					map[(int)current_iter.getX()][(int)current_iter.getY()]++;
+					map[(int)current_iter.getX()][(int)current_iter.getY()] = map[(int)current_iter.getX()][(int)current_iter.getY()]++;
 				}
 				
 			}
@@ -76,6 +74,26 @@ public class SmartAI {
 		
 		
 	}
+	
+	public static void printHazardMap(){
+		
+		for(int i=0; i<Map.MAP_DIMENSIONS; i++){
+			for(int j=0; j<Map.MAP_DIMENSIONS; j++){
+				System.out.print(map[j][i]); 
+			}
+			System.out.print("\n");
+		}
+		
+		System.out.print("\n");
+		
+		try {
+			Thread.sleep(1000);
+		} catch (Exception e){
+			
+		}
+	}
+	
+	
 	
 	public static void moveRandomDirection() {
 		Random rand = new Random();
