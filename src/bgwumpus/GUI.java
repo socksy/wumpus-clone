@@ -28,7 +28,7 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	/** The constructor for the GUI, sets up the canvas, input listener and window attributes
 	 * @param player the player so that the input can be given 
 	 */
-	GUI(PlayableEntity player){
+	GUI(Player player){
 		
 		//create a new canvas where all drawing will occur
 		canvas = new DrawingCanvas(player);

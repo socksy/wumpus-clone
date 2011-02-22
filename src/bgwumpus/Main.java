@@ -19,13 +19,14 @@ public class Main {
 		
 		Map.init();
 		//UNCOMMENT FOR PLAYER MODE
-		GameLogic.init(EntityType.PLAYER);
+		//GameLogic.init(EntityType.PLAYER);
 		//AND COMMENT THIS OUT
-		//GameLogic.init(EntityType.AI);
+		GameLogic.init(EntityType.AI);
 
 		Player player1 = new Player();
 		PlayableEntity ai = new AI();
 		GUI window = new GUI(player1);	
+		ReactiveAI react = new ReactiveAI(ai);
 
 		
 		
@@ -51,9 +52,10 @@ public class Main {
 						System.out.println("Congrats."); //TODO REMOVE
 					}
 				} else {
-					SmartAI.init(ai);
-					SmartAI.reactToPercepts();
-					SmartAI.moveSensibleDirection();
+					//SmartAI.init(ai);
+					//SmartAI.reactToPercepts();
+					//SmartAI.moveSensibleDirection();
+					react.moveDirection();
 					GameLogic.doTile(ai);
 					GameLogic.checkPercepts(ai);
 					window.outputPerceptionMessages(ai);
