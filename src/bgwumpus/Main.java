@@ -26,7 +26,7 @@ public class Main {
 		Player player1 = new Player();
 		PlayableEntity ai = new AI();
 		ReactiveAI react = new ReactiveAI(ai);
-		GUI window = new GUI(ai, react);	
+		GUI window = new GUI(ai);	
 
 		
 		
@@ -43,7 +43,7 @@ public class Main {
 				if (GameLogic.playable_mode) {
 					GameLogic.doTile(player1);
 					GameLogic.checkPercepts(player1);
-					window.outputPerceptionMessages(player1);
+					window.outputMessages(player1);
 					window.render();	
 					if(!player1.isAlive()){ 
 						in_game = false;
@@ -58,7 +58,7 @@ public class Main {
 					react.moveDirection();
 					GameLogic.doTile(ai);
 					GameLogic.checkPercepts(ai);
-					window.outputPerceptionMessages(ai);
+					window.outputMessages(ai);
 					window.render();	
 					if(!ai.isAlive()) {
 						in_game = false;

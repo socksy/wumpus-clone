@@ -18,11 +18,10 @@ public class DrawingCanvas extends JComponent {
 	private static String IMAGE_FOLDER = "images";
 	private static final long serialVersionUID = 5111988071128070407L;
 	private PlayableEntity player;
-	private ReactiveAI reactive;
 
 	
 
-	DrawingCanvas(PlayableEntity player, ReactiveAI reactive){
+	DrawingCanvas(PlayableEntity player){
 		
 
 		//load images
@@ -39,7 +38,6 @@ public class DrawingCanvas extends JComponent {
 		setSize(TILE_DIMENSIONS*Map.MAP_DIMENSIONS,TILE_DIMENSIONS*Map.MAP_DIMENSIONS);
 
 		this.player = player;
-		this.reactive = reactive;
 	}
 	
 	public void drawStatusBar(Graphics g){
@@ -68,8 +66,7 @@ public class DrawingCanvas extends JComponent {
 	public void drawTile(Graphics g, String imagename,int x,int y){
 		
 		g.drawImage(images.get(imagename),x*TILE_DIMENSIONS,STATUS_BAR_SIZE + y*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
-		g.setColor(Color.white);
-		g.drawString(Integer.toString(reactive.map_representation[y][x]),x*TILE_DIMENSIONS,STATUS_BAR_SIZE + y*TILE_DIMENSIONS);
+	
 		
 		
 	}

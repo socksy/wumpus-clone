@@ -20,5 +20,6 @@ public class AI extends PlayableEntity {
 	
 	public void move(Point relative_location) {
 		GameLogic.moveEntity(relative_location.x, relative_location.y);
+		step();
 	}
 }

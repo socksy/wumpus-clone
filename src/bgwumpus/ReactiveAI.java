@@ -61,11 +61,11 @@ public class ReactiveAI {
 		double dice_roll = rand.nextDouble();
 		
 		//probably move in safest direction
-		if (dice_roll<0.7) {
+		if (dice_roll<0.8) {
 			ai.move(movable_directions.get(Integer.toString(keys[0])));
-		} else if (dice_roll<0.9) {
+		} else if (dice_roll<0.96) {
 			ai.move(movable_directions.get(Integer.toString(keys[1])));
-		} else if (dice_roll<0.95) {
+		} else if (dice_roll<0.99) {
 			ai.move(movable_directions.get(Integer.toString(keys[2])));
 		} else {
 			ai.move(movable_directions.get(Integer.toString(keys[3])));
