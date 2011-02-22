@@ -65,7 +65,9 @@ public class GameLogic {
 		}
 		
 		//Initialise player starting position
-		location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
+		do {
+			location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
+		} while (Map.getTypeAt(location.x, location.y) == TileType.PIT);
 		history.add(new Point(location));
 		//Initialise wumpus starting position, make sure it isn't the same as the player location
 		do {
@@ -88,7 +90,7 @@ public class GameLogic {
 		else
 			return null;
 	}
-	
+
 
 	/** set entity location
 	 * @param the location expressed as a Point object and the type of entity as EntityType
@@ -175,6 +177,18 @@ public class GameLogic {
 		//set the location, randomly picked from the list of possible options
 		wumpus_location.setLocation(movable_locations.get(rand.nextInt(movable_locations.size())));
 
+	}
+	
+	public static boolean shootWumpus(Point shotTo){
+
+
+		if(shotTo.equals(wumpus_location)){
+			return true; //hit
+		}
+
+		wumpusMove();
+
+		return false; //missed
 	}
 	
 	/** Checks if the contents of the tile is visible to an entity or if it's too far away
@@ -275,8 +289,7 @@ public class GameLogic {
 
 	
 	public static void doTile(PlayableEntity player){
-		
-		System.out.println(location);
+		torusify(location);
 		switch(Map.getTypeAt(location)){
 			case PIT: 
 				player.die(); 
@@ -296,7 +309,6 @@ public class GameLogic {
 		}
 		
 		if (getTypeAt(location)!=null && getTypeAt(location)==EntityType.WUMPUS) {
-			System.out.println("PANIC"); //TODO REMOVE
 			player.die();
 		}
 		

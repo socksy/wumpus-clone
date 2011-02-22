@@ -15,20 +15,19 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		//TODO initialise everything
 		
 		
+		Map.init();
 		//UNCOMMENT FOR PLAYER MODE
-		//GameLogic.init(EntityType.PLAYER);
+		GameLogic.init(EntityType.PLAYER);
 		//AND COMMENT THIS OUT
-		GameLogic.init(EntityType.AI);
+		//GameLogic.init(EntityType.AI);
 
 		Player player1 = new Player();
 		PlayableEntity ai = new AI();
-		GUI window = new GUI(null);	
+		GUI window = new GUI(player1);	
 
 		
-		Map.init();
 		
 		boolean running = true;
 		boolean in_game = true;
@@ -46,7 +45,7 @@ public class Main {
 					window.outputPerceptionMessages(player1);
 					window.render();	
 					if(!player1.isAlive()){ 
-						running = false;
+						in_game = false;
 					}else if (player1.hasWon()) {
 						in_game = false;
 						System.out.println("Congrats."); //TODO REMOVE
