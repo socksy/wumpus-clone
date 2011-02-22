@@ -29,12 +29,11 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 
 	/** The constructor for the GUI, sets up the canvas, input listener and window attributes
 	 * @param player the player so that the input can be given 
-	 * @param reactive TODO
 	 */
-	GUI(PlayableEntity player, ReactiveAI reactive){
+	GUI(PlayableEntity player){
 		
 		//create a new canvas where all drawing will occur
-		canvas = new DrawingCanvas(player, reactive);
+		canvas = new DrawingCanvas(player);
 		textbox = new JTextArea();
 
 		//create a new user input handler to listen for keyboard input
@@ -81,6 +80,19 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 		
 	
 	
+	}
+
+	public void outputMessages(PlayableEntity player){
+		
+		outputPerceptionMessages(player);
+		
+		Queue<String> messages = GameLogic.getMessageQueue();
+		
+		for(int i=0; i<messages.size(); i++){
+			System.out.println(messages.remove());
+		}
+		
+		
 	}
 
 	
