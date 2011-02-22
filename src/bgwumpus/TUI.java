@@ -20,9 +20,5 @@ public class TUI implements UserInterface {
 		
 		
 	}
-	
-	public void outputPerceptionMessages(PlayableEntity ai){
-		
-	}
 
 }

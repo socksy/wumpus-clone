@@ -3,20 +3,18 @@ import java.util.*;
 import java.awt.Point;
 
 public class GameLogic {
-	static Point player_location = new Point(0,0);
+	static Point location = new Point(-1,-1);
 	static Point wumpus_location = new Point(0,1);
 	static Point[] nearby_locations ={new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)}; //north south east west from (0,0)
-	static Point[] visible_locations = {new Point(0,1),new Point(0,0),new Point(0,-1),new Point(-1,-1),new Point(1,0),new Point(1,1),new Point(-1,0),new Point(-1,1), new Point(1,-1)};
-	//static Point AILocation = new Point(0,0);
+	static Point[] visible_locations = {new Point(0,1),new Point(0,0),new Point(0,-1),
+										new Point(-1,-1),new Point(1,0),new Point(1,1),
+										new Point(-1,0),new Point(-1,1), new Point(1,-1)};
+	//static Point AI_location = new Point(0,0);
 	
-	//Create instances
-	private Player player = new Player();
-	private Wumpus wumpus = new Wumpus();
-	//static AI ai = new AI();
+	public static boolean playable_mode = true;
 	
 	static ArrayList<Point> history = new ArrayList<Point>();
 	
-	static int player_steps = 0;
 	static boolean map_revealed = false;
 	
 	
@@ -46,25 +44,54 @@ public class GameLogic {
 	}*/
 
 	/**
-	 * @return the entity location
+	 * Initialise starting locations and create map
+	 * @parameter mode - which mode the game should be run in - AI or Player
+	 */
+	public static void init(EntityType mode) {
+		
+		Random rand = new Random();
+		
+		//Check what mode, and change co-ordinates appropriately
+		if (mode==EntityType.PLAYER) {
+			playable_mode = true;
+		} else if (mode==EntityType.AI) {
+			playable_mode = false;
+		} else {
+			System.err.println("Only available modes are EntityType.AI or EntityType.PLAYER.");
+		}
+		//Initialise player starting position
+		location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
+		history.add(new Point(location));
+		//Initialise wumpus starting position, make sure it isn't the same as the player location
+		do {
+			wumpus_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
+		} while (wumpus_location.equals(location));
+		
+	}
+
+
+	/**
+	 * Gets specified entity location.
+	 * @param type EntityType to get location of
+	 * @return the entity location as a point
 	 */
 	public static Point getEntityLocation(EntityType type) {
-		if (type == EntityType.PLAYER)
-			return player_location;
-		/*else if (type = EntityType.AI)
-			return AI_location;*/
+		if (type == EntityType.PLAYER || type == EntityType.AI)
+			return location;
 		else if (type == EntityType.WUMPUS)
 			return wumpus_location;
 		else
 			return null;
 	}
+	
 
 	/** set entity location
 	 * @param the location expressed as a Point object and the type of entity as EntityType
 	 */
 	public static void setEntityLocation(Point entity_location, EntityType type) {
-		if (type == EntityType.PLAYER) {
-			player_location = entity_location;
+		if (type == EntityType.PLAYER || type == EntityType.AI) {
+			location = entity_location;
+			history.add(entity_location);
 		} else if (type == EntityType.WUMPUS) {
 			wumpus_location = entity_location;
 		} /*else if (type == EntityType.AI) {
@@ -73,7 +100,6 @@ public class GameLogic {
 			System.err.println("Couldn't set entity location.");
 			return;
 		}
-		history.add(entity_location);
 		
 	}
 
@@ -81,37 +107,42 @@ public class GameLogic {
 	 * @param the location expressed as integers x and y and then the type of entity as EntityType
 	 */
 	public static void setEntityLocation(int x, int y, EntityType type) {
-		if (type == EntityType.PLAYER) {
-			player_location.setLocation(x,y);
-		} else if (type == EntityType.WUMPUS)
+		if (type == EntityType.PLAYER || type == EntityType.AI) {
+			location.setLocation(x,y);
+			history.add(new Point(x,y));
+		} else if (type == EntityType.WUMPUS) {
 			wumpus_location.setLocation(x,y);
-		/*else if (type == EntityType.AI) {
-			AI_location.setLocation(x,y)
-		}*/ else {
+		} else {
 			System.err.println("Couldn't set entity location.");
 			return;
 		}
-		history.add(new Point(x,y));
-
-	}
-
-	/**
-	 * Initialise starting locations and create map
-	 */
-	public static void init() {
-		
-		Random rand = new Random();
-		//Initialise player starting position
-		player_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
-		history.add(new Point(player_location));
-		//Initialise wumpus starting position, make sure it isn't the same as the player location
-		do {
-			wumpus_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
-		} while (wumpus_location.equals(player_location));
-		
-		
 	}
 	
+	/** set entity location
+	 * @param the location expressed as integers x and y and then the type of entity as EntityType
+	 */
+	public static void setEntityLocation(Point entity_location) {
+		location = entity_location;
+		history.add(entity_location);
+	}
+	
+
+	/**
+	 * Translates entity  by amount specified
+	 * @param dx integer amount to translate in x axis
+	 * @param dy integer amount to translate in y axis
+	 */
+	public static void moveEntity(int dx,int dy){	
+		
+		//Point position = getEntityLocation(entity);
+		location.translate(dx, dy);
+		torusify(location);
+		history.add(new Point(location));
+		setEntityLocation(location,EntityType.AI);
+		//player_steps++;
+	}
+
+
 	//TODO: use this when an arrow is badly shot
 	/**
 	 * move the wumpus random place next to square it's on
@@ -150,19 +181,9 @@ public class GameLogic {
 	public static boolean checkVisibility(int x,int y,EntityType type){
 		
 		Point entity_pos = new Point(); //position of the entity which is trying to 'see' tiles
-		
-		switch(type){
-			case PLAYER: //if the player is the entity we are checking for
-				entity_pos.setLocation(player_location); //set the location to that of the player 
-				break;
-			/*case AI:
-				xpos = AI_location.x;
-				ypos = AI_location.y*/
-			//TODO add in for other entity types if we decide it is necessary, if not then possibly just hardcode for the player
-		}
-		
-		
-		//loop through the nearby locations to the player
+		entity_pos.setLocation(location); //set the location to that of the entity 
+
+		//loop through the nearby locations to the entity
 		for (Point i : visible_locations) {
 			Point current_iter =  new Point();
 			current_iter.setLocation(entity_pos.getX()+i.getX(),entity_pos.getY()+i.getY());
@@ -171,28 +192,17 @@ public class GameLogic {
 			if(current_iter.equals(new Point(x,y))){ //if any of these locations equal the tile we are trying to test
 				return true; //it's visible
 			}
-			
 		}
-		
 		return false;
 
 	}
-	
-	/**
-	 * Checks if the contents of the tile is visible to the player or if it's too far away
-	 * @param x the x position of the tile 
-	 * @param y the y position of the tile
-	 * @return true if visible for the player, false if not.
-	 */
-	public static boolean checkVisibility(int x, int y) {
-		return checkVisibility(x, y, EntityType.PLAYER);
-	}
+
 	
 	/** Gets the list of relevant perception messages
      * @param the player object
      * @return an array list of messages based on the perception of the surrounding tiles
      */
-	public static ArrayList<String> getPerceptionMessages(Player player){
+	public static ArrayList<String> getPerceptionMessages(PlayableEntity player){
 		ArrayList<String> perception_messages = new ArrayList<String>();
 				
 			if(player.getPercept("pits")){
@@ -213,31 +223,11 @@ public class GameLogic {
 		
 	}
 
-	public static ArrayList<String> getPerceptionMessages(AI ai){
-		ArrayList<String> perception_messages = new ArrayList<String>();
-
-		if(ai.getPercept("pits")){
-			perception_messages.add("You feel a breeze");
-		}
-		if(ai.getPercept("bats")){
-			perception_messages.add("You hear a flapping noise");				
-		}
-		if(ai.getPercept("treasure")){
-			perception_messages.add("You catch a sparkle in the corner of your eye");				
-		}
-		if(ai.getPercept("wumpus")){
-			perception_messages.add("Eurgh, what is that smell");		
-		}
-
-		return perception_messages;
-		
-		
-	}
 	
 	/** Sets the perception variables if appropriate
 	 * @param player the player object
 	 */
-	public static void checkPercepts(Player player){
+	public static void checkPercepts(PlayableEntity player){
 		
 			player.unsetAllPercepts();
 		
@@ -245,7 +235,7 @@ public class GameLogic {
 			for(Point i : nearby_locations) {
 				
 				Point current_iter =  new Point();
-				current_iter.setLocation(player_location.getX()+i.getX(),player_location.getY()+i.getY());
+				current_iter.setLocation(location.getX()+i.getX(),location.getY()+i.getY());
 				torusify(current_iter);
 				
 				switch(Map.getTypeAt(current_iter)){
@@ -276,43 +266,11 @@ public class GameLogic {
 	/** Sets the perception variables if appropriate
 	 * @param ai the ai object
 	 */
-	public static void checkPercepts(AI ai){
-		
-		ai.unsetAllPercepts();
 
-		
-		//loop through nearby locations e.g 1 tile North, South, East and West
-		for(Point i : nearby_locations) {
-
-			Point current_iter =  new Point();
-			//TODO current_iter.setLocation(ai_location.getX()+i.getX(),ai_location.getY()+i.getY());
-			torusify(current_iter);
-
-			switch(Map.getTypeAt(current_iter)){
-				case PIT: 
-					ai.setPercept("pits"); 
-					break;
-				case BAT: 
-					ai.setPercept("bats"); 
-					break;
-				case TREASURE: 
-					ai.setPercept("treasure");
-					break;
-				default: 
-					break;
-			}
-			
-			//check for wumpus perception
-			if(getTypeAt(current_iter) == EntityType.WUMPUS){
-				ai.setPercept("wumpus"); 
-			}
-		}
 	
-	}
-	
-	public static void doTile(Player player){
+	public static void doTile(PlayableEntity player){
 		
-		Point pos = player_location;
+		Point pos = location;
 		torusify(pos);
 		
 		switch(Map.getTypeAt(pos)){
@@ -341,21 +299,6 @@ public class GameLogic {
 	}
 	
 
-	
-	/**
-	 * Translates entity  by amount specified
-	 * @param dx integer amount to translate in x axis
-	 * @param dy integer amount to translate in y axis
-	 */
-	public static void moveEntity(int dx,int dy,EntityType entity){	
-		
-		Point position = getEntityLocation(entity);
-		position.translate(dx, dy);
-		torusify(position);
-		history.add(new Point(position));
-		setEntityLocation(position,entity);
-		player_steps++;
-	}
 	
 	/**
 	 * Helper method to convert everything to torus coordinates (wrap-around)
@@ -411,7 +354,7 @@ public class GameLogic {
 	 */
 	public static EntityType getTypeAt(int x,int y){
 		
-		if(player_location.getX() == x && player_location.getY() == y){
+		if(location.getX() == x && location.getY() == y){
 			return EntityType.PLAYER;
 		}
 		else if(wumpus_location.getX() == x && wumpus_location.getY() == y){

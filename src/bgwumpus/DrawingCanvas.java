@@ -40,7 +40,7 @@ public class DrawingCanvas extends JComponent {
 	public void drawStatusBar(Graphics g){
 		
 		g.setColor(Color.white);
-		g.drawString("Hunt the Wumpus! \t Steps " + GameLogic.player_steps,10,10);
+		//g.drawString("Hunt the Wumpus! \t Steps " + GameLogic.player_steps,10,10);
 		
 	}
 
