@@ -10,10 +10,10 @@ import java.awt.event.KeyListener;
  */
 public class UserInputHandler implements KeyListener {
 	
-	Player player;
+	PlayableEntity player;
 	boolean shift_down = false;
 	
-	UserInputHandler(Player player){
+	UserInputHandler(PlayableEntity player){
 		
 		this.player = player;
 		
