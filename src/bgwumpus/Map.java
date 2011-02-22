@@ -37,16 +37,7 @@ public class Map {
 		//TODO possibly make random generation ensure that the treasure is a sensible distance away from both player and exit
 		
 		
-		Point generated_point = new Point();
-		
-		//fill the map with standard tiles
-		for(int i=0; i<MAP_DIMENSIONS; i++){
-			for(int j=0; j<MAP_DIMENSIONS; j++){
-			
-				map_array[j][i] = new StandardTile();
-			
-			}
-		}		
+		Point generated_point = new Point();	
 		
 		int PitProbability = 20; //the probability of a pit tile being generated, out of 100
 		int BatProbability = 2; //the probability of a tile being generated, out of 100
