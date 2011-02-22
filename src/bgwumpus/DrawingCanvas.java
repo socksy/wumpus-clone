@@ -90,7 +90,7 @@ public class DrawingCanvas extends JComponent {
 				
 				
 				//if tile is discovered by the player and is near enough to be visible then display normally
-				if( (tileIsDiscovered && GameLogic.checkVisibility(j,i,EntityType.PLAYER)) || GameLogic.map_revealed){
+				if( (tileIsDiscovered && GameLogic.checkVisibility(j,i)) || GameLogic.map_revealed){
 					//draw tiles
 					if(Map.getTypeAt(j,i) == TileType.PIT){ //if a pit, draw a TILE_DIMENSIONSxTILE_DIMENSIONS pit tile in that tile space
 						drawTile(g,"standardTile",j,i);
@@ -108,7 +108,7 @@ public class DrawingCanvas extends JComponent {
 					}
 
 				}
-				else if(tileIsDiscovered && !GameLogic.checkVisibility(j,i,EntityType.PLAYER)) {
+				else if(tileIsDiscovered && (!GameLogic.checkVisibility(j,i) || !GameLogic.checkVisibility(j, i) )) {
 					
 					drawTile(g,"dirt_fog",j,i);
 				}
@@ -116,13 +116,13 @@ public class DrawingCanvas extends JComponent {
 				//draw entities on top				
 				if(GameLogic.getTypeAt(j,i) == EntityType.PLAYER){
 					drawTile(g,"player",j,i); 
-				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i,EntityType.PLAYER) && tileIsDiscovered){
+				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i) && tileIsDiscovered){
 					drawTile(g,"wumpus",j,i);
 				}
 				
 				if(GameLogic.getTypeAt(j,i) == EntityType.AI){
 					drawTile(g,"player",j,i); 
-				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i,EntityType.PLAYER) && tileIsDiscovered){
+				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i) && tileIsDiscovered){
 					drawTile(g,"wumpus",j,i);
 				}
 				

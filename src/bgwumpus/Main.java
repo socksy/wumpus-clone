@@ -19,9 +19,9 @@ public class Main {
 		
 		Map.init();
 		//UNCOMMENT FOR PLAYER MODE
-		GameLogic.init(EntityType.PLAYER);
+		//GameLogic.init(EntityType.PLAYER);
 		//AND COMMENT THIS OUT
-		//GameLogic.init(EntityType.AI);
+		GameLogic.init(EntityType.AI);
 
 		Player player1 = new Player();
 		PlayableEntity ai = new AI();
@@ -53,6 +53,7 @@ public class Main {
 				} else {
 					SmartAI.init(ai);
 					SmartAI.reactToPercepts();
+					SmartAI.printHazardMap();
 					SmartAI.moveSensibleDirection();
 					GameLogic.doTile(ai);
 					GameLogic.checkPercepts(ai);
@@ -66,7 +67,7 @@ public class Main {
 					}
 					
 					try {
-						Thread.sleep(500);
+						Thread.sleep(300);
 						
 					} catch (Exception e) {
 						// TODO: handle exception
