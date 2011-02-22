@@ -155,4 +155,25 @@ public abstract class PlayableEntity extends Entity {
 		
 		return score;
 	}
+	
+	public void moveLeft() {
+		if (GameLogic.playable_mode) {
+			GameLogic.moveEntity(-1, 0);
+		}
+	}
+	public void moveRight() {
+		if (GameLogic.playable_mode) {
+			GameLogic.moveEntity(1, 0);
+		}
+	}
+	public void moveUp() {
+		if (GameLogic.playable_mode) {
+			GameLogic.moveEntity(0, -1);
+		}
+	}
+	public void moveDown() {
+		if (GameLogic.playable_mode) {
+			GameLogic.moveEntity(0, 1);
+		}
+	}
 }
