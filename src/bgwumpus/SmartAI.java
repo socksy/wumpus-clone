@@ -51,7 +51,7 @@ public class SmartAI {
 		
 	}
 	
-	public static void reactToPercepts(){
+	/*(public static void reactToPercepts(){
 		
 		ArrayList<String> messages = GameLogic.getPerceptionMessageCodes(ai);
 		Point pos = GameLogic.getEntityLocation(EntityType.AI);
@@ -73,7 +73,7 @@ public class SmartAI {
 		}
 		
 		
-	}
+	}*/
 	
 	public static void printHazardMap(){
 		

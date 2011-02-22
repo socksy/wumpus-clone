@@ -13,7 +13,7 @@ public class UserInputHandler implements KeyListener {
 	PlayableEntity player;
 	boolean shift_down = false;
 	
-	UserInputHandler(Player player){
+	UserInputHandler(PlayableEntity player){
 		
 		this.player = player;
 		

@@ -25,8 +25,8 @@ public class Main {
 
 		Player player1 = new Player();
 		PlayableEntity ai = new AI();
-		GUI window = new GUI(player1);	
 		ReactiveAI react = new ReactiveAI(ai);
+		GUI window = new GUI(ai, react);	
 
 		
 		
@@ -68,7 +68,7 @@ public class Main {
 					}
 					
 					try {
-						Thread.sleep(500);
+						Thread.sleep(50);
 						
 					} catch (Exception e) {
 						// TODO: handle exception

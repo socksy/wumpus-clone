@@ -7,8 +7,10 @@ import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Queue;
 
 /**
  * The graphical interface which contains the window and overall output
@@ -27,11 +29,12 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 
 	/** The constructor for the GUI, sets up the canvas, input listener and window attributes
 	 * @param player the player so that the input can be given 
+	 * @param reactive TODO
 	 */
-	GUI(Player player){
+	GUI(PlayableEntity player, ReactiveAI reactive){
 		
 		//create a new canvas where all drawing will occur
-		canvas = new DrawingCanvas(player);
+		canvas = new DrawingCanvas(player, reactive);
 		textbox = new JTextArea();
 
 		//create a new user input handler to listen for keyboard input
@@ -67,19 +70,19 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	public void outputPerceptionMessages(PlayableEntity player){
 		
 		//get the perception messages based on location
-		ArrayList<String> messages = GameLogic.getPerceptionMessages(player);
-
-		//if there are messages and the number of messages has changed since the last time //TODO CHANGE THIS SO THAT IT ONLY OUTPUTS WHEN MESSAGES ARE DIFFERENT 
-		if(messages != null && messages.size() != messageListSize){
-			for(int i=0; i<messages.size(); i++){ //loop through all messages
-				System.out.println(messages.get(i) + "\n"); //output a message
-			}
-		}
+		Queue<String> messages = GameLogic.getPerceptionMessages(player);
 		
-		//get the size of the message list
-		messageListSize = messages.size();
-			
+		
+
+		//if there are new messages
+			for(int i=0; i<messages.size(); i++){ //loop through all messages
+				System.out.println(messages.remove()); //output a message
+			}
+		
+	
+	
 	}
+
 	
 
 }
