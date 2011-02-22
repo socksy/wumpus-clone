@@ -19,6 +19,7 @@ public class GameLogic {
 	
 	static ArrayList<Point> history = new ArrayList<Point>();
 	
+	static boolean map_revealed = false;
 	
 	
 	/** 
