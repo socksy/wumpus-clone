@@ -183,8 +183,8 @@ public class GameLogic {
 	public static boolean shootWumpus(Point shotTo){
 
 
-		if(shotTo.equals(wumpus_location) && !wumpus_dead){
-			wumpus_dead = true;
+		if(shotTo.equals(wumpus_location)){
+			wumpus_dead = false;
 			return true; //hit
 		}
 		
@@ -328,7 +328,7 @@ public class GameLogic {
 			//set to a random x and y location
 			location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
 			
-		} while(Map.getTypeAt(location) != TileType.PIT && location != wumpus_location); 
+		} while(Map.getTypeAt(location) == TileType.PIT && location != wumpus_location); 
 		//if it chooses the same location, it'll choose a different random location
 				
 	}
