@@ -20,6 +20,7 @@ public class GameLogic {
 	static ArrayList<Point> history = new ArrayList<Point>();
 	
 	static boolean map_revealed = false;
+	static boolean wumpus_dead = false; //TODO put somewhere better?
 	
 	
 	/** 
@@ -182,9 +183,11 @@ public class GameLogic {
 	public static boolean shootWumpus(Point shotTo){
 
 
-		if(shotTo.equals(wumpus_location)){
+		if(shotTo.equals(wumpus_location) && !wumpus_dead){
+			wumpus_dead = true;
 			return true; //hit
 		}
+		
 
 		wumpusMove();
 

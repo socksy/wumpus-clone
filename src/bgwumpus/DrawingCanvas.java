@@ -79,8 +79,7 @@ public class DrawingCanvas extends JComponent {
 						g.drawImage(images.get("exit"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
 					} else if(Map.getTypeAt(j,i) == TileType.BAT){
 						g.drawImage(images.get("bat"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
-					}
-					else { //if not a special tile
+					} else { //if not a special tile
 						g.drawImage(images.get("standardTile"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null); //draw the dirt standard tile
 					}
 
@@ -96,8 +95,7 @@ public class DrawingCanvas extends JComponent {
 				}
 				if(GameLogic.getTypeAt(j,i) == EntityType.AI){
 					g.drawImage(images.get("player"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null); 
-				}
-				else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i,EntityType.PLAYER) && tileIsDiscovered){
+				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i,EntityType.PLAYER) && tileIsDiscovered){
 					g.drawImage(images.get("wumpus"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
 				}
 				
