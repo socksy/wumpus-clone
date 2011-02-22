@@ -150,6 +150,18 @@ public class GameLogic {
 		//player_steps++;
 	}
 
+	/**
+	 * Translates entity  by amount specified
+	 * @param dx integer amount to translate in x axis
+	 * @param dy integer amount to translate in y axis
+	 */
+	public static void moveEntity(Point new_location){	
+		
+		history.add(new Point(location));
+		setEntityLocation(new_location,EntityType.AI);
+		//player_steps++;
+	}
+
 
 	//TODO: use this when an arrow is badly shot
 	/**
@@ -244,6 +256,31 @@ public class GameLogic {
 	
 		
 	}
+	
+	/** Gets the list of relevant perception codes
+     * @param the player object
+     * @return an array list of messages based on the perception of the surrounding tiles
+     */
+	public static ArrayList<String> getPerceptionMessageCodes(PlayableEntity player){
+		ArrayList<String> perception_messages = new ArrayList<String>();
+				
+			if(player.getPercept("pits")){
+				perception_messages.add("P");
+			}
+			if(player.getPercept("bats")){
+				perception_messages.add("B");				
+			}
+			if(player.getPercept("treasure")){
+				perception_messages.add("T");				
+			}
+			if(player.getPercept("wumpus")){
+				perception_messages.add("W");		
+			}
+						
+			return perception_messages;
+	
+		
+	}
 
 	
 	/** Sets the perception variables if appropriate
@@ -312,7 +349,7 @@ public class GameLogic {
 				break;
 		}
 		
-		if (getTypeAt(location) == EntityType.WUMPUS) {
+		if (getTypeAt(location) == EntityType.WUMPUS && !wumpus_dead) {
 			player.die();
 		}
 		
@@ -333,7 +370,10 @@ public class GameLogic {
 			
 		} while(Map.getTypeAt(location) == TileType.PIT && location != wumpus_location); 
 		//if it chooses the same location, it'll choose a different random location
-				
+
+		//add the point
+		history.add(new Point(location));
+		
 	}
 	
 
@@ -367,7 +407,7 @@ public class GameLogic {
 	 * Helper method to convert everything to torus coordinates (wrap-around)
 	 * @param point Point array to convert to torus coordinates 
 	 */
-	private static void torusify(Point point) {
+	public static void torusify(Point point) {
 		//less than 0? Loop over however many times needed.
 		while (point.getX()<0) {
 			point.setLocation(Map.MAP_DIMENSIONS + point.getX(),point.getY());
