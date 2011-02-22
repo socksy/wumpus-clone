@@ -276,20 +276,29 @@ public class GameLogic {
 	
 	public static void doTile(PlayableEntity player){
 		
-		Point pos = location;
-		torusify(pos);
-		
-		switch(Map.getTypeAt(pos)){
+		System.out.println(location);
+		switch(Map.getTypeAt(location)){
 			case PIT: 
 				player.die(); 
+				System.out.println("Dead motherfucker, do you speak it?"); //TODO REMOVE
 				break;
 			case BAT: 
 				movedBySuperbat();
 				break;
 			case TREASURE:
-				
+				player.pickUpTreasure();
+				break;
+			case EXIT:
+				if (player.hasPickedUpTreasure()) {
+					player.winGame();
+				}
+				break;
 		}
 		
+		if (getTypeAt(location)!=null && getTypeAt(location)==EntityType.WUMPUS) {
+			System.out.println("PANIC"); //TODO REMOVE
+			player.die();
+		}
 		
 	}
 	

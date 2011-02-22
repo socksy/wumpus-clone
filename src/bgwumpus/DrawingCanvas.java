@@ -15,7 +15,9 @@ public class DrawingCanvas extends JComponent {
 	private HashMap<String, Image> images = new HashMap<String, Image>();
 	public static int TILE_DIMENSIONS = 64;
 	private static String IMAGE_FOLDER = "images";
+	private static final long serialVersionUID = 5111988071128070407L;
 
+	
 
 	DrawingCanvas(){
 		
@@ -89,6 +91,9 @@ public class DrawingCanvas extends JComponent {
 
 				//draw entities on top				
 				if(GameLogic.getTypeAt(j,i) == EntityType.PLAYER){
+					g.drawImage(images.get("player"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null); 
+				}
+				if(GameLogic.getTypeAt(j,i) == EntityType.AI){
 					g.drawImage(images.get("player"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null); 
 				}
 				else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i,EntityType.PLAYER) && tileIsDiscovered){
