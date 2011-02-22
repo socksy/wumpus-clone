@@ -51,7 +51,9 @@ public class Main {
 						System.out.println("Congrats."); //TODO REMOVE
 					}
 				} else {
-					DumbAI.moveRandomDirection();
+					SmartAI.init(ai);
+					SmartAI.reactToPercepts();
+					SmartAI.moveSensibleDirection();
 					GameLogic.doTile(ai);
 					GameLogic.checkPercepts(ai);
 					window.outputPerceptionMessages(ai);
@@ -73,6 +75,10 @@ public class Main {
 				
 				
 			}
+			
+			window.render();
+			running = false;
+			
 		}
 	}
 	
