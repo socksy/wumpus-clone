@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class DumbAI {
 	
-	public void moveRandomDirection() {
+	public static void moveRandomDirection() {
 		Random rand = new Random();
 		switch (rand.nextInt(4)) {
 			case 0: //left

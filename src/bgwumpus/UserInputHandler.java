@@ -9,6 +9,14 @@ import java.awt.event.KeyListener;
  *
  */
 public class UserInputHandler implements KeyListener {
+	
+	Player player;
+	
+	UserInputHandler(Player player){
+		
+		this.player = player;
+		
+	}
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
@@ -50,7 +58,7 @@ public class UserInputHandler implements KeyListener {
 			case KeyEvent.VK_UP:  break;
 			case KeyEvent.VK_DOWN:  break;
 			case KeyEvent.VK_ESCAPE: System.exit(0); break; //quit upon hitting escape
-		case KeyEvent.VK_R: GameLogic.map_revealed = true; break; 
+			case KeyEvent.VK_R: GameLogic.map_revealed = true; break; 
 
 		}
 		
@@ -63,11 +71,12 @@ public class UserInputHandler implements KeyListener {
 		switch(key_code){
 		
 			//move up,down,left,or right when corresponding arrow key is released
-			case KeyEvent.VK_RIGHT: GameLogic.moveEntity(1, 0);  break;
-			case KeyEvent.VK_LEFT: GameLogic.moveEntity(-1, 0); break;
-			case KeyEvent.VK_UP:  GameLogic.moveEntity(0, -1); break;
-			case KeyEvent.VK_DOWN:  GameLogic.moveEntity(0, 1); break;
+			case KeyEvent.VK_RIGHT: player.moveRight();  break;
+			case KeyEvent.VK_LEFT: player.moveLeft(); break;
+			case KeyEvent.VK_UP:  player.moveUp(); break;
+			case KeyEvent.VK_DOWN:  player.moveDown(); break;
 			case KeyEvent.VK_R: GameLogic.map_revealed = false; break; 
+
 		}
 		
 		

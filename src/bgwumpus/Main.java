@@ -14,14 +14,16 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
 		//TODO initialise everything
-		GUI window = new GUI();	
+		GUI window = new GUI(null);	
 		
 		
 		//UNCOMMENT FOR PLAYER MODE
 		//GameLogic.init(EntityType.PLAYER);
 		//AND COMMENT THIS OUT
 		GameLogic.init(EntityType.AI);
+
 		Player player1 = new Player();
 		PlayableEntity ai = new AI();
 		
@@ -53,10 +55,20 @@ public class Main {
 					if(!ai.isAlive()) {
 						running = false;
 					}
+					DumbAI.moveRandomDirection();
+					
+					try {
+						Thread.sleep(500);
+						
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 				}
 				
 				
 			}
 		}
 	}
+	
+	
 }
