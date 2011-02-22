@@ -22,7 +22,7 @@ public class GameLogic {
 	static boolean map_revealed = false;
 	static boolean wumpus_dead = false; //TODO put somewhere better?
 	static Queue<String> message_queue = new LinkedList<String>();
-	static int last_steps = 0;
+	static int last_steps = -1;
 
 
 
@@ -252,7 +252,7 @@ public class GameLogic {
 		Queue<String> perception_messages = new LinkedList<String>();
 		
 		
-		if(player.getPlayerSteps() > last_steps || last_steps == 0){
+		if(player.getPlayerSteps() > last_steps){
 			if(player.getPercept("pits")){
 				perception_messages.add("You feel a breeze");
 			}
@@ -266,7 +266,7 @@ public class GameLogic {
 				perception_messages.add("Eurgh, what is that smell");		
 			}
 		
-			last_steps = player.getPlayerSteps()+1;
+			last_steps = player.getPlayerSteps();
 			
 		}
 		
