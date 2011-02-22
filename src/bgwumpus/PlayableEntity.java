@@ -140,7 +140,8 @@ public abstract class PlayableEntity extends Entity {
 				break;		
 		}
 		
-		if (GameLogic.shootWumpus(x) && !GameLogic.wumpus_dead) {
+		if (!GameLogic.wumpus_dead) {
+			if(GameLogic.shootWumpus(x))
 			score += 30; //if it has successfully shot it
 		} else {
 			score -=3; //missed

@@ -184,7 +184,7 @@ public class GameLogic {
 
 
 		if(shotTo.equals(wumpus_location)){
-			wumpus_dead = false;
+			wumpus_dead = true;
 			return true; //hit
 		}
 		
@@ -292,6 +292,7 @@ public class GameLogic {
 
 	
 	public static void doTile(PlayableEntity player){
+				
 		torusify(location);
 		switch(Map.getTypeAt(location)){
 			case PIT: 
@@ -311,9 +312,11 @@ public class GameLogic {
 				break;
 		}
 		
-		if (getTypeAt(location)!=null && getTypeAt(location)==EntityType.WUMPUS) {
+		if (getTypeAt(location) == EntityType.WUMPUS) {
 			player.die();
 		}
+		
+
 		
 	}
 	
@@ -389,11 +392,11 @@ public class GameLogic {
 	 */
 	public static EntityType getTypeAt(int x,int y){
 		
-		if(location.getX() == x && location.getY() == y && playable_mode == true){
-			return EntityType.PLAYER;
-		}
-		else if(wumpus_location.getX() == x && wumpus_location.getY() == y){
+		if(wumpus_location.getX() == x && wumpus_location.getY() == y){
 			return EntityType.WUMPUS;
+		}
+		else if(location.getX() == x && location.getY() == y && playable_mode == true){
+			return EntityType.PLAYER;
 		}
 		else if(location.getX() == x && location.getY() == y && playable_mode == false){
 			return EntityType.AI;
