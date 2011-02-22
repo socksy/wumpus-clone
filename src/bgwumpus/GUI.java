@@ -9,7 +9,6 @@ import javax.swing.JTextArea;
 
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Queue;
 
 /**
  * The graphical interface which contains the window and overall output
@@ -23,11 +22,13 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	private static final long serialVersionUID = 5111988071128070407L;
 	private DrawingCanvas canvas; 
 	private JTextArea textbox;
+	private boolean messagesUpdated = false;
+	int messageListSize = 0;
 
 	/** The constructor for the GUI, sets up the canvas, input listener and window attributes
 	 * @param player the player so that the input can be given 
 	 */
-	GUI(PlayableEntity player){
+	GUI(Player player){
 		
 		//create a new canvas where all drawing will occur
 		canvas = new DrawingCanvas(player);
@@ -66,33 +67,18 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	public void outputPerceptionMessages(PlayableEntity player){
 		
 		//get the perception messages based on location
-		Queue<String> messages = GameLogic.getPerceptionMessages(player);
-		
-		
+		ArrayList<String> messages = GameLogic.getPerceptionMessages(player);
 
-		//if there are new messages
+		//if there are messages and the number of messages has changed since the last time //TODO CHANGE THIS SO THAT IT ONLY OUTPUTS WHEN MESSAGES ARE DIFFERENT 
+		if(messages != null && messages.size() != messageListSize){
 			for(int i=0; i<messages.size(); i++){ //loop through all messages
-				System.out.println(messages.remove()); //output a message
+				System.out.println(messages.get(i) + "\n"); //output a message
 			}
-		
-	
-	
-	}
-		
-	
-
-	
-	public void outputMessages(PlayableEntity player){
-		
-		outputPerceptionMessages(player);
-		
-		Queue<String> messages = GameLogic.getMessageQueue();
-		
-		for(int i=0; i<messages.size(); i++){
-			System.out.println(messages.remove());
 		}
 		
-		
+		//get the size of the message list
+		messageListSize = messages.size();
+			
 	}
 	
 
