@@ -19,9 +19,9 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	private boolean messagesUpdated = false;
 	int messageListSize = 0;
 
-	GUI(){
+	GUI(Player player){
 
-		UserInputHandler inputHandler = new UserInputHandler(); 
+		UserInputHandler inputHandler = new UserInputHandler(player); 
 		addKeyListener(inputHandler);
 
 		setSize(Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS,Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS+20);
