@@ -2,6 +2,10 @@ package bgwumpus;
 import java.util.*;
 import java.awt.Point;
 
+/**
+ * This class keeps a record of where all the entities are, and has methods to define operations to move them and retrieve locations.
+ *
+ */
 public class GameLogic {
 	static Point location = new Point(-1,-1);
 	static Point wumpus_location = new Point(0,1);
@@ -58,6 +62,7 @@ public class GameLogic {
 		} else {
 			System.err.println("Only available modes are EntityType.AI or EntityType.PLAYER.");
 		}
+		
 		//Initialise player starting position
 		location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
 		history.add(new Point(location));
@@ -147,27 +152,27 @@ public class GameLogic {
 	 * move the wumpus random place next to square it's on
 	 */
 	public static void wumpusMove() {
-		ArrayList<Point> moveable_locations = new ArrayList<Point>();
+		ArrayList<Point> movable_locations = new ArrayList<Point>();
 		for (Point i : nearby_locations) {
 			Point current_iter =  new Point();
 			current_iter.setLocation(wumpus_location.getX()+i.getX(),wumpus_location.getY()+i.getY());
 			torusify(current_iter);
 			
-			//If nothing dangerous, add to possible moveable locations
+			//If nothing dangerous, add to possible movable locations
 			switch(Map.getTypeAt(current_iter)){
 				case BAT: 
 				case EXIT: 
 				case PIT: 
 					break;
 				default: 
-					moveable_locations.add(current_iter);
+					movable_locations.add(current_iter);
 					break;
 			}
 			
 		}
 		Random rand = new Random();
 		//set the location, randomly picked from the list of possible options
-		wumpus_location.setLocation(moveable_locations.get(rand.nextInt(moveable_locations.size())));
+		wumpus_location.setLocation(movable_locations.get(rand.nextInt(movable_locations.size())));
 
 	}
 	
@@ -237,6 +242,7 @@ public class GameLogic {
 				current_iter.setLocation(location.getX()+i.getX(),location.getY()+i.getY());
 				torusify(current_iter);
 				
+				//check for different tile perceptions
 				switch(Map.getTypeAt(current_iter)){
 				
 					case PIT: 
@@ -273,27 +279,33 @@ public class GameLogic {
 		torusify(pos);
 		
 		switch(Map.getTypeAt(pos)){
-		case PIT: player.die(); break;
-		case BAT: movedBySuperbat(EntityType.PLAYER);
+			case PIT: 
+				player.die(); 
+				break;
+			case BAT: 
+				movedBySuperbat();
+				break;
+			case TREASURE:
+				
 		}
 		
 		
 	}
 	
-	public static void movedBySuperbat(EntityType entity){
-		
-		Point location = getEntityLocation(entity);
-		Random random_generator = new Random();
+	/**
+	 * Moves PlayableEntity to random location (but not a pit!)
+	 */
+	public static void movedBySuperbat(){
+		Random rand = new Random();
 		//randomly move
-		do { //do while it has not generated a sensible location e.g on a pit, the same location or on the wumpus
+		do { //do while it has not generated a sensible location e.g on a pit or on the wumpus
 			
 			//set to a random x and y location
-			location.setLocation(random_generator.nextInt(Map.MAP_DIMENSIONS),random_generator.nextInt(Map.MAP_DIMENSIONS));
+			location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
 			
-		} while(Map.getTypeAt(location) != TileType.PIT && location != wumpus_location && location != getEntityLocation(entity)); 
-		
-		setEntityLocation(location,entity);
-		
+		} while(Map.getTypeAt(location) != TileType.PIT && location != wumpus_location); 
+		//if it chooses the same location, it'll choose a different random location
+				
 	}
 	
 
@@ -352,16 +364,16 @@ public class GameLogic {
 	 */
 	public static EntityType getTypeAt(int x,int y){
 		
-		if(location.getX() == x && location.getY() == y){
+		if(location.getX() == x && location.getY() == y && playable_mode == true){
 			return EntityType.PLAYER;
 		}
 		else if(wumpus_location.getX() == x && wumpus_location.getY() == y){
 			return EntityType.WUMPUS;
 		}
-		/*else if(ai_location.getX() == x && ai_location.getY() == y){
+		else if(location.getX() == x && location.getY() == y && playable_mode == false){
 			return EntityType.AI;
 		}
-		*/
+		
 		
 		return null;
 		
