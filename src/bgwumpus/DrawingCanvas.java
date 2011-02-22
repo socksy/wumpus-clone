@@ -14,6 +14,7 @@ public class DrawingCanvas extends JComponent {
 
 	private HashMap<String, Image> images = new HashMap<String, Image>();
 	public static int TILE_DIMENSIONS = 64;
+	public static int STATUS_BAR_SIZE = 32;
 	private static String IMAGE_FOLDER = "images";
 	private static final long serialVersionUID = 5111988071128070407L;
 	private PlayableEntity player;
@@ -42,14 +43,37 @@ public class DrawingCanvas extends JComponent {
 	
 	public void drawStatusBar(Graphics g){
 		
+		String output = new String();
+		
+		output += "Score " + player.getScore();
+		output += "\t Steps " + player.getPlayerSteps();
+		if(player.hasPickedUpTreasure())
+			output += " Treasure: Yes\t";
+		else
+			output += " Treasure: No\t";
+		if(GameLogic.wumpus_dead)
+			output += " Wumpus: Dead\t";
+		else {
+			output += " Wumpus: Alive";
+		}
+		
+		g.setColor(Color.black);
+		g.fillRect(0,0,TILE_DIMENSIONS*Map.MAP_DIMENSIONS,20);
 		g.setColor(Color.white);
-		g.drawString("Score: " + player.getScore(),10,10);
+		g.drawString(output,10,20);
+		
+	}
+	
+	public void drawTile(Graphics g, String imagename,int x,int y){
+		
+		g.drawImage(images.get(imagename),x*TILE_DIMENSIONS,STATUS_BAR_SIZE + y*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
+		
 		
 	}
 
 	public void paint(Graphics g){
 
-		g.fillRect(0,0,Map.MAP_DIMENSIONS*TILE_DIMENSIONS,Map.MAP_DIMENSIONS*TILE_DIMENSIONS);
+		g.fillRect(0,0,Map.MAP_DIMENSIONS*TILE_DIMENSIONS,Map.MAP_DIMENSIONS*TILE_DIMENSIONS+STATUS_BAR_SIZE);
 
 		for(int i=0; i<Map.MAP_DIMENSIONS; i++){
 			for(int j=0; j<Map.MAP_DIMENSIONS; j++){
@@ -69,34 +93,37 @@ public class DrawingCanvas extends JComponent {
 				if( (tileIsDiscovered && GameLogic.checkVisibility(j,i,EntityType.PLAYER)) || GameLogic.map_revealed){
 					//draw tiles
 					if(Map.getTypeAt(j,i) == TileType.PIT){ //if a pit, draw a TILE_DIMENSIONSxTILE_DIMENSIONS pit tile in that tile space
-						g.drawImage(images.get("standardTile"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);//draw the dirt underneath 
-						g.drawImage(images.get("pit"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null);
+						drawTile(g,"standardTile",j,i);
+						drawTile(g,"pit", j, i);
 					} else if(Map.getTypeAt(j,i) == TileType.TREASURE){ //if the treasure is on this tile, draw a TILE_DIMENSIONSxTILE_DIMENSIONS treasure tile in that tile space
-						g.drawImage(images.get("standardTile"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null); //draw the dirt underneath 
-						g.drawImage(images.get("treasure"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null);	
+						drawTile(g,"standardTile",j,i); //draw the dirt underneath 
+						drawTile(g,"treasure",j,i);	
 					
 					} else if(Map.getTypeAt(j,i) == TileType.EXIT){ //if an exit, draw the exit tile
-						g.drawImage(images.get("exit"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
+						drawTile(g,"exit",j,i);
 					} else if(Map.getTypeAt(j,i) == TileType.BAT){
-						g.drawImage(images.get("bat"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
+						drawTile(g,"bat",j,i);
 					} else { //if not a special tile
-						g.drawImage(images.get("standardTile"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null); //draw the dirt standard tile
+						drawTile(g,"standardTile",j,i); //draw the dirt standard tile
 					}
 
 				}
 				else if(tileIsDiscovered && !GameLogic.checkVisibility(j,i,EntityType.PLAYER)) {
 					
-					g.drawImage(images.get("dirt_fog"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
+					drawTile(g,"dirt_fog",j,i);
 				}
 
 				//draw entities on top				
 				if(GameLogic.getTypeAt(j,i) == EntityType.PLAYER){
-					g.drawImage(images.get("player"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null); 
-				}
-				if(GameLogic.getTypeAt(j,i) == EntityType.AI){
-					g.drawImage(images.get("player"), j*TILE_DIMENSIONS, i*TILE_DIMENSIONS, TILE_DIMENSIONS, TILE_DIMENSIONS, null); 
+					drawTile(g,"player",j,i); 
 				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i,EntityType.PLAYER) && tileIsDiscovered){
-					g.drawImage(images.get("wumpus"),j*TILE_DIMENSIONS,i*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
+					drawTile(g,"wumpus",j,i);
+				}
+				
+				if(GameLogic.getTypeAt(j,i) == EntityType.AI){
+					drawTile(g,"player",j,i); 
+				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i,EntityType.PLAYER) && tileIsDiscovered){
+					drawTile(g,"wumpus",j,i);
 				}
 				
 
