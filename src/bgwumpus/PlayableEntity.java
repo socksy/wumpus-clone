@@ -1,5 +1,6 @@
 package bgwumpus;
 
+import java.awt.Point;
 import java.util.HashMap;
 
 public abstract class PlayableEntity extends Entity {
@@ -47,7 +48,7 @@ public abstract class PlayableEntity extends Entity {
 	/**
 	 * @return the player_steps
 	 */
-	public static int getPlayer_steps() {
+	public static int getPlayerSteps() {
 		return player_steps;
 	}
 
@@ -70,14 +71,20 @@ public abstract class PlayableEntity extends Entity {
 	 * Kills it off.
 	 */
 	public void die() {
-		alive = false;
+		if(isAlive()) {			
+			alive = false;
+			score -= 50;
+		}
 	}
 	
 	/**
 	 * Picked up treasure, can now leave the exit
 	 */
 	public void pickUpTreasure() {
-		got_treasure = true;
+		if(!got_treasure) {
+			got_treasure = true;
+			score += 30;			
+		}
 	}
 	
 	/**
@@ -92,8 +99,10 @@ public abstract class PlayableEntity extends Entity {
 	 * Won the game!
 	 */
 	public void winGame() {
-		score +=50;
-		won_game = true;
+		if (!hasWon()) {			
+			score +=50;
+			won_game = true;
+		}
 	}
 	
 	/**
@@ -104,4 +113,45 @@ public abstract class PlayableEntity extends Entity {
 		return won_game;
 	}
 	
+	/**
+	 * Shoot arrow into the darkness
+	 * @param direction as an int
+	 * 0 - left
+	 * 1 - up
+	 * 2 - right
+	 * 3 - down
+	 */
+	public void shoot(int direction) {
+		
+		Point x = new Point(GameLogic.getEntityLocation(EntityType.PLAYER));
+		
+		switch (direction) {
+			case 0: //left!
+				x.translate(-1,0);
+				break;
+			case 1: //up!
+				x.translate(0,-1);
+				break;
+			case 2: //right!
+				x.translate(1,0);
+				break;
+			case 3: //down!
+				x.translate(0,1);
+				break;		
+		}
+		
+		if (GameLogic.shootWumpus(x)) {
+			score += 30; //if it has successfully shot it
+		} else {
+			score -=3; //missed
+		}
+		
+		
+	}
+
+	public int getScore() {
+		// TODO Auto-generated method stub
+		
+		return score;
+	}
 }

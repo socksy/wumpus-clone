@@ -18,12 +18,12 @@ public class Player extends PlayableEntity {
 	
 	public void moveLeft() {
 		if (GameLogic.playable_mode) {
-			GameLogic.moveEntity(1, 0);
+			GameLogic.moveEntity(-1, 0);
 		}
 	}
 	public void moveRight() {
 		if (GameLogic.playable_mode) {
-			GameLogic.moveEntity(-1, 0);
+			GameLogic.moveEntity(1, 0);
 		}
 	}
 	public void moveUp() {

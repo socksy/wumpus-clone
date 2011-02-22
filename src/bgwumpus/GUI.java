@@ -15,11 +15,13 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	 * TODO work out what this is, eclipse complains with a warning if I do not have it
 	 */
 	private static final long serialVersionUID = 5111988071128070407L;
-	private DrawingCanvas canvas = new DrawingCanvas();
+	private DrawingCanvas canvas;
 	private boolean messagesUpdated = false;
 	int messageListSize = 0;
 
 	GUI(Player player){
+		
+		canvas = new DrawingCanvas(player);
 
 		UserInputHandler inputHandler = new UserInputHandler(player); 
 		addKeyListener(inputHandler);
