@@ -108,21 +108,20 @@ public class DrawingCanvas extends JComponent {
 					}
 
 				}
-				else if(tileIsDiscovered && (!GameLogic.checkVisibility(j,i) || !GameLogic.checkVisibility(j, i) )) {
-					
+				else if(tileIsDiscovered && !GameLogic.checkVisibility(j,i)) {
 					drawTile(g,"dirt_fog",j,i);
 				}
 
 				//draw entities on top				
 				if(GameLogic.getTypeAt(j,i) == EntityType.PLAYER){
 					drawTile(g,"player",j,i); 
-				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i) && tileIsDiscovered){
+				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && tileIsDiscovered){
 					drawTile(g,"wumpus",j,i);
 				}
 				
 				if(GameLogic.getTypeAt(j,i) == EntityType.AI){
 					drawTile(g,"player",j,i); 
-				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && GameLogic.checkVisibility(j,i) && tileIsDiscovered){
+				} else if(GameLogic.getTypeAt(j,i) == EntityType.WUMPUS && tileIsDiscovered){
 					drawTile(g,"wumpus",j,i);
 				}
 				
