@@ -306,7 +306,9 @@ public class GameLogic {
 						player.setPercept("bats"); 
 						break;
 					case TREASURE: 
-						player.setPercept("treasure"); 
+						//if the treasure has not been picked up
+						if(!player.hasPickedUpTreasure()) 
+							player.setPercept("treasure"); 
 						break;
 					default: 
 						break;
