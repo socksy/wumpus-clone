@@ -16,5 +16,29 @@ public class Player extends PlayableEntity {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public void moveLeft() {
+		if (GameLogic.playable_mode) {
+			GameLogic.moveEntity(-1, 0);
+			step();
+		}
+	}
+	public void moveRight() {
+		if (GameLogic.playable_mode) {
+			GameLogic.moveEntity(1, 0);
+			step();
+		}
+	}
+	public void moveUp() {
+		if (GameLogic.playable_mode) {
+			GameLogic.moveEntity(0, -1);
+			step();
+		}
+	}
+	public void moveDown() {
+		if (GameLogic.playable_mode) {
+			GameLogic.moveEntity(0, 1);
+			step();
+		}
+	}
 
 }
