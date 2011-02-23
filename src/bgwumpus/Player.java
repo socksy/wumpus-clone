@@ -3,8 +3,6 @@
  */
 package bgwumpus;
 
-import java.util.Set;
-
 public class Player extends PlayableEntity {	
 	public Player() {
 		type = EntityType.PLAYER;

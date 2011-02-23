@@ -20,7 +20,7 @@ public class GameLogic {
 	static ArrayList<Point> history = new ArrayList<Point>();
 
 	static boolean map_revealed = false;
-	static boolean wumpus_dead = false; //TODO put somewhere better?
+	static boolean wumpus_dead = false; 
 	static boolean in_game = false;
 	static boolean running = true;
 	static Queue<String> message_queue = new LinkedList<String>();

@@ -61,7 +61,7 @@ public class GeneticPool {
 	public static void main(String[] args) {
 		Map.init();
 		for (int i=0; i<5; i++){
-		createPool(500);}
+		createPool(100);}
 	}
 	
 	/**

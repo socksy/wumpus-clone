@@ -187,10 +187,7 @@ public class GeneticAI {
 		String temporary_chromo = "";
 		temporary_chromo += chromosone.substring(0, crossover_pos);
 		temporary_chromo += other.getChromosone().substring(crossover_pos, chromo_length*4);
-		
-		//TODO MOVE TO POOL
-		//double shootingprob = (probability_of_shooting+other.getProbabilityOfShooting())/2;
-		
+				
 		return mutate(chromosone);
 	}
 	

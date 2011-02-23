@@ -55,7 +55,6 @@ public class UserInputHandler implements KeyListener {
 			case KeyEvent.VK_ESCAPE: System.exit(0); break; //quit upon hitting escape
 			case KeyEvent.VK_R: GameLogic.map_revealed = true; break; 
 			case KeyEvent.VK_SHIFT: shift_down = true; break;
-			case KeyEvent.VK_M: GameLogic.switchMode(); break;
 			
 
 		}
@@ -99,6 +98,8 @@ public class UserInputHandler implements KeyListener {
 				break;
 			case KeyEvent.VK_R: GameLogic.map_revealed = false; break; 
 			case KeyEvent.VK_SHIFT: shift_down = false; break;
+			case KeyEvent.VK_M: GameLogic.switchMode(); break;
+
 
 		}
 		

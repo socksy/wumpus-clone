@@ -33,7 +33,6 @@ public class SmartAI {
 		Point leastDangerous = new Point();
 		int highestDanger = 0;
 		
-		//TODO this bit of code is replicated quite a lot, possibly abstract it further in GameLogic
 		for(Point i : GameLogic.nearby_locations){
 			
 			current_iter.setLocation(pos.getX()+i.getX(),pos.getY()+i.getY());

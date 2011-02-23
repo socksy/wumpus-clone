@@ -6,8 +6,6 @@ package bgwumpus;
  */
 public abstract class Entity {
 	 public EntityType type;
-	//TODO: EVERYTHING
-	//(what methods? does it move? what attributes?)
 
 	/**
 	 * @return the enum type of the entity
