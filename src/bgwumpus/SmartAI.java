@@ -8,6 +8,10 @@ import java.util.Random;
 import sun.misc.Queue;
 
 
+/**
+ * 
+ * @deprectated
+ */
 public class SmartAI {
 	
 	public static int map[][] = new int[Map.MAP_DIMENSIONS][Map.MAP_DIMENSIONS];
