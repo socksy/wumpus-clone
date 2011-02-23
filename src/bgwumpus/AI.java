@@ -22,4 +22,15 @@ public class AI extends PlayableEntity {
 		GameLogic.moveEntity(relative_location.x, relative_location.y);
 		step();
 	}
+	
+	public void reset() {
+		percepts.put("pits",false);
+		percepts.put("bats",false);
+		percepts.put("treasure", false);
+		percepts.put("wumpus",false);
+		alive = true;
+		got_treasure = false;
+		score = 0;
+		won_game = false;
+	}
 }
