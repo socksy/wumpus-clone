@@ -12,7 +12,7 @@ public interface UserInterface {
 	//TODO fill out interface with appropriate methods to implement
 	public void render();
 	public void outputPerceptionMessages(PlayableEntity player);
-
+	public void outputMessages(PlayableEntity player);
 	
 
 }

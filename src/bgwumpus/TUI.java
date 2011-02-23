@@ -11,13 +11,16 @@ public class TUI implements UserInterface {
 	 */
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
 		
 		
 	}
 	
 	public void outputPerceptionMessages(PlayableEntity player){
 		
+		
+	}
+	
+	public void outputMessages(PlayableEntity player){
 		
 	}
 
