@@ -15,7 +15,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		
+		boolean switched = false;
 		
 		Map.init();
 		//UNCOMMENT FOR PLAYER MODE
@@ -27,16 +27,32 @@ public class Main {
 		PlayableEntity ai = new AI();
 		GUI window = new GUI(player1);	
 
-		
-		
-		boolean running = true;
-		boolean in_game = true;
+		GameLogic.setRunning(true);
 		
 		//Program loop
-		while (running) {
+		while (GameLogic.getRunning()) {
+			
+			if(GameLogic.playable_mode != true && !switched){
+				
+				GameLogic.init(EntityType.AI);
+				window = new GUI(ai);
+				switched = !switched;
+				
+				System.out.println("switching to AI");
+				
+				
+			}
+			else if(switched) {
+				
+				GameLogic.init(EntityType.PLAYER);
+				window = new GUI(player1);
+				switched = !switched;
+				
+			}
+			
 			
 			//Game loop
-			while(in_game){
+			while(GameLogic.getInGame()){
 
 				window.render();
 				if (GameLogic.playable_mode) {
@@ -45,22 +61,34 @@ public class Main {
 					window.outputMessages(player1);
 					window.render();	
 					if(!player1.isAlive()){ 
-						in_game = false;
+						GameLogic.setInGame(false);
+						try {
+							Thread.sleep(300);
+							
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
 					}else if (player1.hasWon()) {
-						in_game = false;
-						System.out.println("Congrats."); //TODO REMOVE
+						GameLogic.setInGame(false);
+						System.out.println("You have won"); //TODO REMOVE
+						try {
+							Thread.sleep(300);
+							
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
 					}
 				} else {
-					//SmartAI.init(ai);
-					//SmartAI.moveSensibleDirection();
+					SmartAI.init(ai);
+					SmartAI.moveSensibleDirection();
 					GameLogic.doTile(ai);
 					GameLogic.checkPercepts(ai);
-					window.outputPerceptionMessages(ai);
+					window.outputMessages(ai);
 					window.render();	
 					if(!ai.isAlive()) {
-						in_game = false;
+						GameLogic.setInGame(false);
 					} else if (ai.hasWon()) {
-						in_game = false;
+						GameLogic.setInGame(false);
 						System.out.println("Congrats."); //TODO REMOVE
 					}
 					
@@ -72,11 +100,22 @@ public class Main {
 					}
 				}
 				
+				//if it's about to return to menu
+				if(GameLogic.getInGame() == false){
+					//reset everything
+					Map.init();
+					if(GameLogic.playable_mode){ //TODO make getter
+					GameLogic.init(EntityType.PLAYER);
+					player1.reset();
+					}else {
+					GameLogic.init(EntityType.AI);
+					ai.reset();
+					}
+				}
 				
 			}
 			
 			window.render();
-			running = false;
 			
 		}
 	}

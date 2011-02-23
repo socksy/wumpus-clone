@@ -11,8 +11,8 @@ public class GameLogic {
 	static Point wumpus_location = new Point(0,1);
 	static Point[] nearby_locations ={new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)}; //north south east west from (0,0)
 	static Point[] visible_locations = {new Point(0,1),new Point(0,0),new Point(0,-1),
-		new Point(-1,-1),new Point(1,0),new Point(1,1),
-		new Point(-1,0),new Point(-1,1), new Point(1,-1)};
+	new Point(-1,-1),new Point(1,0),new Point(1,1),
+	new Point(-1,0),new Point(-1,1), new Point(1,-1)};
 	//static Point AI_location = new Point(0,0);
 
 	public static boolean playable_mode = true;
@@ -21,8 +21,11 @@ public class GameLogic {
 
 	static boolean map_revealed = false;
 	static boolean wumpus_dead = false; //TODO put somewhere better?
+	static boolean in_game = false;
+	static boolean running = true;
 	static Queue<String> message_queue = new LinkedList<String>();
 	static int last_steps = -1;
+	
 
 
 
@@ -50,6 +53,13 @@ public class GameLogic {
 		}
 		return entity_map;
 	}*/
+	
+	/**
+	 * resets all variables to initial values for new game
+	 */
+	public static void reset(){
+		
+	}
 
 	/**
 	 * @return the queue of messages to be outputted
@@ -64,9 +74,18 @@ public class GameLogic {
 	 * @parameter mode - which mode the game should be run in - AI or Player
 	 */
 	public static void init(EntityType mode) {
+		
+		
 
 		Random rand = new Random();
 
+		//reset variables
+		history.clear();
+		last_steps = -1;
+		map_revealed = false;
+		wumpus_dead = false;
+		
+		
 		//Check what mode, and change co-ordinates appropriately
 		if (mode==EntityType.PLAYER) {
 			playable_mode = true;
@@ -86,6 +105,10 @@ public class GameLogic {
 			wumpus_location.setLocation(rand.nextInt(Map.MAP_DIMENSIONS),rand.nextInt(Map.MAP_DIMENSIONS));
 		} while (wumpus_location.equals(location));
 
+	}
+	
+	public static void switchMode(){
+			playable_mode = !playable_mode;
 	}
 
 
@@ -209,10 +232,13 @@ public class GameLogic {
 
 			if(shotTo.equals(wumpus_location)){
 				wumpus_dead = true;
+				message_queue.add("You killed the wumpus!");
 				return true; //hit
 			}
 
-			wumpusMove();
+			wumpusMove(); //move the wumpus if the shot didn't hit 
+			message_queue.add("The wumpus moved upon hearing your shot");
+
 
 		}
 
@@ -357,7 +383,7 @@ public class GameLogic {
 
 
 	public static void doTile(PlayableEntity player){
-
+		
 		torusify(location);
 		switch(Map.getTypeAt(location)){
 		case PIT: 
@@ -383,7 +409,7 @@ public class GameLogic {
 		}
 
 		if (getTypeAt(location) == EntityType.WUMPUS && !wumpus_dead) {
-			message_queue.add("You escaped the cave");
+			message_queue.add("The wumpus devoured you!");
 			player.die();
 		}
 
@@ -490,6 +516,23 @@ public class GameLogic {
 		return getTypeAt((int)p.getX(),(int)p.getY());
 
 
+	}
+
+
+	public static boolean getRunning() {
+		return running;
+	}
+	
+	public static void setRunning(boolean true_or_false){
+		running = true_or_false;
+	}
+	
+	public static boolean getInGame(){
+		return in_game;
+	}
+	
+	public static void setInGame(boolean true_or_false){
+		in_game = true_or_false;
 	}
 
 

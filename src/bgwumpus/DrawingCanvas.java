@@ -34,11 +34,16 @@ public class DrawingCanvas extends JComponent {
 		images.put("bat", t.getImage(IMAGE_FOLDER + "/batTile.png"));
 		images.put("wumpus", t.getImage(IMAGE_FOLDER + "/wumpus.png"));
 		images.put("dirt_fog",t.getImage(IMAGE_FOLDER + "/dirt_fog.png"));
+		images.put("menu", t.getImage(IMAGE_FOLDER + "/MenuImage.png"));
 
 		setSize(TILE_DIMENSIONS*Map.MAP_DIMENSIONS,TILE_DIMENSIONS*Map.MAP_DIMENSIONS);
 
 		this.player = player;
 
+	}
+	
+	public void drawMenu(Graphics g){
+		g.drawImage(images.get("menu"),0,0,576,576,null);
 	}
 	
 	public void drawStatusBar(Graphics g){
@@ -70,9 +75,9 @@ public class DrawingCanvas extends JComponent {
 		
 		
 	}
-
-	public void paint(Graphics g){
-
+	
+	public void drawInGame(Graphics g){
+		
 		g.fillRect(0,0,Map.MAP_DIMENSIONS*TILE_DIMENSIONS,Map.MAP_DIMENSIONS*TILE_DIMENSIONS+STATUS_BAR_SIZE);
 
 		for(int i=0; i<Map.MAP_DIMENSIONS; i++){
@@ -131,7 +136,20 @@ public class DrawingCanvas extends JComponent {
 		
 	drawStatusBar(g);
 
-
+		
 	}
 
+	public void paint(Graphics g){
+		
+		if(GameLogic.getInGame() && GameLogic.getRunning()){
+			
+			drawInGame(g);
+			
+		}
+		else if(GameLogic.getRunning()){
+			
+			drawMenu(g);
+		}
+
+	}
 }

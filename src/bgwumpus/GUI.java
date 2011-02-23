@@ -1,11 +1,21 @@
 package bgwumpus;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.DefaultKeyboardFocusManager;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
+import java.awt.TextComponent;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -22,33 +32,49 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 	 */
 	private static final long serialVersionUID = 5111988071128070407L;
 	private DrawingCanvas canvas; 
-	private JTextArea textbox;
+	private JTextArea text_area;
+	private JScrollPane scroll_pane;
 
 	/** The constructor for the GUI, sets up the canvas, input listener and window attributes
 	 * @param player the player so that the input can be given 
 	 */
 	GUI(PlayableEntity player){
-		
-		//create a new canvas where all drawing will occur
-		canvas = new DrawingCanvas(player);
-		textbox = new JTextArea();
 
-		//create a new user input handler to listen for keyboard input
-		UserInputHandler inputHandler = new UserInputHandler(player); 
-		addKeyListener(inputHandler); //add it to the frame to use it
+			//Setup layout, drawing canvas and text area
+		    setLayout(null);
+		   
+			text_area = new JTextArea(5, 20);
+			JScrollPane scroll_pane = new JScrollPane(text_area); 
+			canvas = new DrawingCanvas(player);
 
-		//set the map size to: the number of tiles * the tile size
-		setSize(Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS,Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS+20+canvas.STATUS_BAR_SIZE);
-		add(canvas); //add the canvas to the frame
-		//add(textbox); //add the textbox to the frame
+			
+			text_area.setEditable(false);	  
+			
+			scroll_pane.setBounds(15,Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS+canvas.STATUS_BAR_SIZE, Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS-15, 100);
+			canvas.setBounds(0,0,Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS,Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS+20+canvas.STATUS_BAR_SIZE);		
+	      
+	        add(canvas);
+	        add(scroll_pane);
 
-		//window attributes
-		setTitle("Hunt the Wumpus!"); //set the window bar title
-		setDefaultCloseOperation(EXIT_ON_CLOSE); //enable exit upon closing the window
-		setVisible(true); //show the window
-		setResizable(false); //disable resizing of the window
+	        setSize(Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS,Map.MAP_DIMENSIONS*canvas.TILE_DIMENSIONS+canvas.STATUS_BAR_SIZE + 130);
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        setLocationRelativeTo(null);
+	        setFocusable(true);
+			setTitle("Hunt the Wumpus!"); //set the window bar title
+			
+			
+			//create a new user input handler to listen for keyboard input
+			UserInputHandler inputHandler = new UserInputHandler(player); 
+			addKeyListener(inputHandler); //add it to the frame to use it
+			
+			setVisible(true); //show the window
+			
+			//maintain focus
+			requestFocus();
+
 		
 	}
+	
 
 	/* (non-Javadoc) 
 	 * @see bgwumpus.UserInterface#render()
@@ -72,7 +98,8 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 
 		//if there are new messages
 			for(int i=0; i<messages.size(); i++){ //loop through all messages
-				System.out.println(messages.remove()); //output a message
+				text_area.setText(messages.element() + "\n" + text_area.getText()); //output to textbox 
+				System.out.println(messages.remove()); //output a message to stdout
 			}
 		
 	
@@ -89,7 +116,8 @@ public class GUI extends javax.swing.JFrame implements UserInterface {
 		Queue<String> messages = GameLogic.getMessageQueue();
 		
 		for(int i=0; i<messages.size(); i++){
-			System.out.println(messages.remove());
+			text_area.setText(messages.element() + "\n" + text_area.getText()); //output to textbox 
+			System.out.println(messages.remove()); //output a message to stdout
 		}
 		
 		
