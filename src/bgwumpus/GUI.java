@@ -1,24 +1,9 @@
 package bgwumpus;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.DefaultKeyboardFocusManager;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
-import java.awt.TextComponent;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
-import java.awt.Toolkit;
-import java.util.ArrayList;
 import java.util.Queue;
 
 /**
@@ -27,9 +12,7 @@ import java.util.Queue;
  */
 public class GUI extends javax.swing.JFrame implements UserInterface {
 
-	/**
-	 * TODO work out what this is, eclipse complains with a warning if I do not have it
-	 */
+
 	private static final long serialVersionUID = 5111988071128070407L;
 	private DrawingCanvas canvas; 
 	private JTextArea text_area;

@@ -32,10 +32,7 @@ public class Map {
 	/**
 	 * Generates a random map
 	 */
-	private static void generateMap(){
-		
-		//TODO possibly make random generation ensure that the treasure is a sensible distance away from both player and exit
-		
+	private static void generateMap(){	
 		
 		Point generated_point = new Point();	
 		
@@ -93,13 +90,6 @@ public class Map {
 		} while(GameLogic.location.equals(generated_point) || GameLogic.wumpus_location.equals(generated_point) || map_array[x_index][y_index].getType() == TileType.EXIT);
 		
 		map_array[x_index][y_index] = new TreasureTile();
-		
-		
-		//TODO sort the tiles randomly?
-		
-		
-		
-		
 		
 		
 	}
