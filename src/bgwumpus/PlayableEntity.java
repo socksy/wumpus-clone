@@ -8,13 +8,23 @@ public abstract class PlayableEntity extends Entity {
 	protected HashMap<String,Boolean> percepts = new HashMap<String,Boolean>();
 	protected boolean alive = true;
 	protected boolean got_treasure = false;
-	protected int score = 0;
+	private int score = 0;
+	protected int score_before_division = 0;
 	protected boolean won_game = false;
 
 	public PlayableEntity() {
 		super();
 	}
 
+	
+	public void reset(){
+		player_steps = 0;
+		alive = true;
+		got_treasure = false;
+		score = 0;
+		won_game = false;
+	}
+	
 	public void setPercept(String name) {
 		percepts.put(name, true);		
 	}
@@ -73,7 +83,7 @@ public abstract class PlayableEntity extends Entity {
 	public void die() {
 		if(isAlive()) {			
 			alive = false;
-			score -= 50;
+			score_before_division -= 50;
 		}
 	}
 	
@@ -83,7 +93,7 @@ public abstract class PlayableEntity extends Entity {
 	public void pickUpTreasure() {
 		if(!got_treasure) {
 			got_treasure = true;
-			score += 30;			
+			score_before_division += 30;			
 		}
 	}
 	
@@ -100,7 +110,7 @@ public abstract class PlayableEntity extends Entity {
 	 */
 	public void winGame() {
 		if (!hasWon()) {			
-			score +=50;
+			score_before_division +=50;
 			won_game = true;
 		}
 	}
@@ -142,9 +152,9 @@ public abstract class PlayableEntity extends Entity {
 		
 		if (!GameLogic.wumpus_dead) {
 			if(GameLogic.shootWumpus(x))
-			score += 30; //if it has successfully shot it
+			score_before_division += 30; //if it has successfully shot it
 		} else {
-			score -=3; //missed
+			score_before_division -=3; //missed
 		}
 		
 		
@@ -168,7 +178,13 @@ public abstract class PlayableEntity extends Entity {
 	}
 
 	public int getScore() {
-		return score;
+		int final_score;
+		//avoid division by 0
+		if(player_steps > 0)
+			final_score = score_before_division/player_steps;
+		else
+			final_score = score_before_division;
+		return final_score;
 	}
 	
 	public void moveLeft() {

@@ -11,7 +11,6 @@ public class AI extends PlayableEntity {
 		percepts.put("bats",false);
 		percepts.put("treasure", false);
 		percepts.put("wumpus",false);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Point getLocation() {
