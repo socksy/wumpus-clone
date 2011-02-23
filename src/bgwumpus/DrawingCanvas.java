@@ -39,7 +39,6 @@ public class DrawingCanvas extends JComponent {
 		setSize(TILE_DIMENSIONS*Map.MAP_DIMENSIONS,TILE_DIMENSIONS*Map.MAP_DIMENSIONS);
 
 		this.player = player;
-
 	}
 	
 	public void drawMenu(Graphics g){
@@ -72,6 +71,7 @@ public class DrawingCanvas extends JComponent {
 	public void drawTile(Graphics g, String imagename,int x,int y){
 		
 		g.drawImage(images.get(imagename),x*TILE_DIMENSIONS,STATUS_BAR_SIZE + y*TILE_DIMENSIONS,TILE_DIMENSIONS,TILE_DIMENSIONS,null);
+	
 		
 		
 	}
