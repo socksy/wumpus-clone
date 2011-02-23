@@ -5,11 +5,11 @@ import java.util.Random;
 
 public class GeneticAI {
 	AI ai;
-	int chromo_length = 40;
+	static int chromo_length = 40;
 	String chromosone = "";
 	double[] prob_of_movement = new double[chromo_length/2]; //5 sets of four actions (does something when has no percepts too)
 	double[] prob_of_shooting = new double[chromo_length/2]; //4 sets of five actions (not shooting)
-	double probability_of_shooting;
+	double probability_of_shooting = 0.1;
 	double mutation_rate = 0.05;
 
 	
@@ -22,15 +22,20 @@ public class GeneticAI {
 		probability_of_shooting = shootingprob;
 		
 		decodeChromosone();
-		for (double i : prob_of_shooting) {
-		System.out.println(i); }
 	}
 	
 	//default to test
 	public GeneticAI(AI ai) {
-		this("1111111111111111111111111111111111111111111111111111" +
-				"111111111111111111111111111111111111111111111111111" +
-				"111111111111111111111111111111111111111111111111111111111",ai,0.1);
+		this(generateRandomChromosone(), ai, 0.1);
+	}
+	
+	private static String generateRandomChromosone() {
+		String temp = "";
+		Random rand = new Random();
+		for (int i=0; i<chromo_length; i++) {
+			temp += Integer.toBinaryString(rand.nextInt(16));
+		}
+		return temp;
 	}
 	
 	/**
