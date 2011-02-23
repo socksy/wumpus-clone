@@ -9,8 +9,8 @@ public class GeneticAI {
 	String chromosone = "";
 	double[] prob_of_movement = new double[chromo_length/2]; //5 sets of four actions (does something when has no percepts too)
 	double[] prob_of_shooting = new double[chromo_length/2]; //4 sets of five actions (not shooting)
-	double probability_of_shooting = 0.1;
-	double mutation_rate = 0.05;
+	double probability_of_shooting = 0.2;
+	double mutation_rate = 0.1;
 
 	
 	public GeneticAI(String chromosone, AI ai, double shootingprob) {
@@ -33,7 +33,14 @@ public class GeneticAI {
 		String temp = "";
 		Random rand = new Random();
 		for (int i=0; i<chromo_length; i++) {
-			temp += Integer.toBinaryString(rand.nextInt(16));
+			String bin_temps = "";
+			String bin_end = Integer.toBinaryString(rand.nextInt(16));
+			int fill = 4 - bin_end.length(); //to make sure we get strings in the form eg. 0010 
+			for (int j=0; j<fill; j++) {
+				bin_temps+='0';
+			}
+			bin_temps += bin_end;
+			temp += bin_temps;
 		}
 		return temp;
 	}
@@ -173,13 +180,13 @@ public class GeneticAI {
 		return chromosone;
 	}
 
-	public String mate(GeneticAI other, AI ai) {
+	public String mate(GeneticAI other) {
 		Random rand = new Random();
-		int crossover_pos = rand.nextInt(chromo_length);
+		int crossover_pos = rand.nextInt(chromo_length*4);
 		
 		String temporary_chromo = "";
 		temporary_chromo += chromosone.substring(0, crossover_pos);
-		temporary_chromo += other.getChromosone().substring(crossover_pos, chromo_length);
+		temporary_chromo += other.getChromosone().substring(crossover_pos, chromo_length*4);
 		
 		//TODO MOVE TO POOL
 		//double shootingprob = (probability_of_shooting+other.getProbabilityOfShooting())/2;
@@ -203,7 +210,7 @@ public class GeneticAI {
 	private String mutate (String chromosone) {
 		String temp = "";
 		Random rand = new Random();
-		for (int i=0; i<chromo_length; i++) {
+		for (int i=0; i<chromo_length*4; i++) {
 			if (rand.nextDouble()>mutation_rate) {
 				temp += chromosone.charAt(i);
 			} else {
