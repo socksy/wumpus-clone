@@ -8,7 +8,7 @@ public abstract class PlayableEntity extends Entity {
 	protected HashMap<String,Boolean> percepts = new HashMap<String,Boolean>();
 	protected boolean alive = true;
 	protected boolean got_treasure = false;
-	private int score = 0;
+	protected int score = 0;
 	protected int score_before_division = 0;
 	protected boolean won_game = false;
 
