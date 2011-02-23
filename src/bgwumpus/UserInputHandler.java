@@ -24,7 +24,6 @@ public class UserInputHandler implements KeyListener {
 	 */
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		processKeyPress(arg0);
 	}
 
@@ -33,7 +32,6 @@ public class UserInputHandler implements KeyListener {
 	 */
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		processKeyRelease(arg0);
 
 	}
@@ -43,7 +41,6 @@ public class UserInputHandler implements KeyListener {
 	 */
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 	
@@ -54,13 +51,11 @@ public class UserInputHandler implements KeyListener {
 		switch(key_code){
 		
 		//Are all these necessary?
-			case KeyEvent.VK_RIGHT:  break;
-			case KeyEvent.VK_LEFT:  break;
-			case KeyEvent.VK_UP:  break;
-			case KeyEvent.VK_DOWN:  break;
+			case KeyEvent.VK_B: GameLogic.setInGame(true); break;
 			case KeyEvent.VK_ESCAPE: System.exit(0); break; //quit upon hitting escape
 			case KeyEvent.VK_R: GameLogic.map_revealed = true; break; 
 			case KeyEvent.VK_SHIFT: shift_down = true; break;
+			case KeyEvent.VK_M: GameLogic.switchMode(); break;
 			
 
 		}
@@ -74,28 +69,28 @@ public class UserInputHandler implements KeyListener {
 		switch(key_code){
 		
 			//move up,down,left,or right when corresponding arrow key is released
-			case KeyEvent.VK_LEFT: 
+			case KeyEvent.VK_A: 
 				if (!shift_down) {
 					player.moveLeft(); 
 				} else {
 					player.shoot(0);
 				}
 				break;
-			case KeyEvent.VK_UP:  
+			case KeyEvent.VK_W:  
 				if (!shift_down) {
 					player.moveUp(); 
 				} else {
 					player.shoot(1);
 				}
 				break;
-			case KeyEvent.VK_RIGHT: 
+			case KeyEvent.VK_D: 
 				if(!shift_down) {
 					player.moveRight();
 				} else {
 					player.shoot(2);
 				}
 				break;
-			case KeyEvent.VK_DOWN:  
+			case KeyEvent.VK_S:  
 				if (!shift_down) {
 					player.moveDown();
 				} else {

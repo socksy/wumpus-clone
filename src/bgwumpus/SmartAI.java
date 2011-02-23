@@ -2,7 +2,10 @@ package bgwumpus;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
+
+import sun.misc.Queue;
 
 
 public class SmartAI {
@@ -51,9 +54,9 @@ public class SmartAI {
 		
 	}
 	
-	/*(public static void reactToPercepts(){
+	/*public static void reactToPercepts(){
 		
-		ArrayList<String> messages = GameLogic.getPerceptionMessageCodes(ai);
+		Queue<String> messages = GameLogic.getPerceptionMessageCodes(ai);
 		Point pos = GameLogic.getEntityLocation(EntityType.AI);
 		
 		for(int i=0; i<messages.size(); i++){
