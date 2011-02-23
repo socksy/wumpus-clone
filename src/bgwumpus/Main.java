@@ -25,6 +25,7 @@ public class Main {
 
 		Player player1 = new Player();
 		PlayableEntity ai = new AI();
+		ReactiveAI react = new ReactiveAI(ai);
 		GUI window = new GUI(player1);	
 
 		GameLogic.setRunning(true);
